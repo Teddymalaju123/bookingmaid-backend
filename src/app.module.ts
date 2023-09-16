@@ -4,10 +4,10 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { User } from './entities/User';
 import { UserType } from './entities/UserType';
-import { UsersModule } from './module/users/users.module';
 import { Booking } from './entities/booking';
 import { Feedback } from './entities/feedback';
 import { Maidwork } from './entities/maidwork';
+import { WorkModule } from './module/work/work.module';
 
 @Module({
   imports: [
@@ -21,7 +21,7 @@ import { Maidwork } from './entities/maidwork';
       entities: [User, UserType, Maidwork, Feedback, Booking],
       synchronize: false,
     }),
-    UsersModule,
+    WorkModule,
   ],
   controllers: [AppController],
   providers: [AppService],
