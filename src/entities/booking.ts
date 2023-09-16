@@ -16,7 +16,7 @@ export class Booking {
   @Column()
   service_price: number;
 
-  @Column()
+  @Column({ type: 'blob'})
   paymentslip: Blob;
 
   @Column()
