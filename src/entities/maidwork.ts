@@ -10,10 +10,10 @@ export class Maidwork {
   @Column()
   status: string;
 
-  @Column()
+  @Column({ type: 'datetime'})
   workingtime : Date;
 
-  @Column()
+  @Column({ type: 'datetime'})
   endworking: Date;
 
   @Column()

@@ -7,10 +7,10 @@ export class Booking {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   booking_id: number;
 
-  @Column()
+  @Column({type: 'datetime'})
   booking_date: Date;
 
-  @Column()
+  @Column({type: 'datetime'})
   work_hour: Date;
 
   @Column()
