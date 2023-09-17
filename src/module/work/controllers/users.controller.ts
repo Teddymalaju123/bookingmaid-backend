@@ -24,7 +24,7 @@ export class UsersController {
 
   @Get("/get-resident")
   getResident() {
-    return this.userService.findMaid();
+    return this.userService.findResident();
   }
 
 
