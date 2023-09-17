@@ -1,8 +1,7 @@
 
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UserDao } from '../dao/user.dao';
 import { Feedback } from 'src/entities/feedback';
 import { FeedbackDao } from '../dao/feedback.dao';
 
