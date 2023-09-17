@@ -19,7 +19,8 @@ export class LoginService {
   async login(loginReq: LoginDto): Promise<User | null> {
     const query = `
       SELECT * FROM user
-      WHERE username = ? and password = ?
+      INNER JOIN usertype ON user.type_id = usertype.id_type
+      WHERE username = ? and password = ? and usertype.type_name = "nitilegal"
     `;
     const [user] = await this.userRepository.query(query, [loginReq.username, loginReq.password]);
     if (!user) {
