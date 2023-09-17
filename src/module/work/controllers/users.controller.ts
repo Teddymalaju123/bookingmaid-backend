@@ -17,6 +17,17 @@ export class UsersController {
     return this.userService.findUsers();
   }
 
+  @Get("/get-maid")
+  getMaid() {
+    return this.userService.findMaid();
+  }
+
+  @Get("/get-resident")
+  getResident() {
+    return this.userService.findMaid();
+  }
+
+
   @Post('/save')
   async createUser(@Body() createUserDto: CreateUserDto) {
     try {

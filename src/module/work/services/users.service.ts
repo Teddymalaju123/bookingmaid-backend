@@ -17,6 +17,27 @@ export class UsersService {
     return this.userRepository.find();
   }
 
+  async findMaid(): Promise<ResUserDto[]> {
+    try {
+      const usersWithTypes = await this.userDao.findMaid();
+      return usersWithTypes;
+    } catch (error) {
+      throw new Error(`Failed to fetch users with user types: ${error.message}`);
+    }
+  }
+
+
+  async findResident(): Promise<ResUserDto[]> {
+    try {
+      const usersWithTypes = await this.userDao.findResident();
+      return usersWithTypes;
+    } catch (error) {
+      throw new Error(`Failed to fetch users with user types: ${error.message}`);
+    }
+  }
+
+
+
   async createUser(userDetails: CreateUserDto) {
     try {
       const newUser = this.userRepository.create({

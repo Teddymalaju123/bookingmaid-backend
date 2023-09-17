@@ -14,10 +14,13 @@ import { FeedbackService } from './services/feedback.service';
 import { Maidwork } from 'src/entities/maidwork';
 import { MaidWorkController } from './controllers/maidwork.controller';
 import { MaidWorkService } from './services/maidworks.service';
+import { LoginController } from '../auth/controller/login.controller';
+import { LoginService } from '../auth/service/login.service';
+import { FeedbackDao } from './dao/feedback.dao';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User, UserType, Booking, Feedback, Maidwork])],
-  controllers: [UsersController, BooksController, FeedBackController, MaidWorkController],
-  providers: [UsersService, UserDao, BooksService, FeedbackService, MaidWorkService],
+  controllers: [UsersController, BooksController, FeedBackController, MaidWorkController, LoginController],
+  providers: [UsersService, UserDao, FeedbackDao, BooksService, FeedbackService, MaidWorkService, LoginService],
 })
 export class WorkModule { }

@@ -4,14 +4,25 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserDao } from '../dao/user.dao';
 import { Feedback } from 'src/entities/feedback';
+import { FeedbackDao } from '../dao/feedback.dao';
 
 
 @Injectable()
 export class FeedbackService {
   constructor(
-    private readonly userDao: UserDao,
+    private readonly feedbackDao: FeedbackDao,
     @InjectRepository(Feedback) private feedBackRepository: Repository<Feedback>,
   ) { }
+
+  async findFeedback() {
+    try {
+      const usersWithTypes = await this.feedbackDao.findFeedback();
+      return usersWithTypes;
+    } catch (error) {
+      throw new Error(`Failed to fetch users with user types: ${error.message}`);
+    }
+  }
+
 
   findFeed() {
     return this.feedBackRepository.find();
@@ -42,15 +53,6 @@ export class FeedbackService {
       return `รายการการจองคิว ${feedId} ถูกยกเลิกแล้ว.`;
     } catch (error) {
       throw new Error(`ไม่สามารถยกเลิกการจองคิว: ${error.message}`);
-    }
-  }
-
-  async findUsersWithUserTypes(): Promise<ResUserDto[]> {
-    try {
-      const usersWithTypes = await this.userDao.findUsersWithUserTypes();
-      return usersWithTypes;
-    } catch (error) {
-      throw new Error(`Failed to fetch users with user types: ${error.message}`);
     }
   }
 

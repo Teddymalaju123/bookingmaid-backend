@@ -6,16 +6,11 @@ import { FeedbackService } from '../services/feedback.service';
 export class FeedBackController {
   constructor(private feedbackService: FeedbackService) { }
 
-  @Get('/users-with-types')
-  async findUsersWithUserTypes() {
-    return this.feedbackService.findUsersWithUserTypes();
+  @Get('/getfeed')
+  async findFeedback() {
+    return this.feedbackService.findFeedback()
   }
 
-
-  @Get("/getfeed")
-  getBooks() {
-    return this.feedbackService.findFeed();
-  }
 
   @Post('/savefeed')
   async createFeed(@Body() createFeedDto: CreateFeedDto) {

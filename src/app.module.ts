@@ -21,6 +21,7 @@ import { WorkModule } from './module/work/work.module';
       entities: [User, UserType, Maidwork, Feedback, Booking],
       synchronize: false,
     }),
+
     WorkModule,
   ],
   controllers: [AppController],

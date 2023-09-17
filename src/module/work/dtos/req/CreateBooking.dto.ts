@@ -4,7 +4,7 @@ interface CreateBookDto {
   booking_date: Date;
   work_hour: Date;
   service_price: number;
-  paymentslip: Blob;
+  paymentslip: Buffer;
   maid_rating: number;
   status: string;
   user_booking: number;

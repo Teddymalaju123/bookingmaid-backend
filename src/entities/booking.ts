@@ -7,17 +7,17 @@ export class Booking {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   booking_id: number;
 
-  @Column({type: 'datetime'})
+  @Column({ type: 'datetime' })
   booking_date: Date;
 
-  @Column({type: 'datetime'})
+  @Column({ type: 'datetime' })
   work_hour: Date;
 
   @Column()
   service_price: number;
 
-  @Column({ type: 'blob'})
-  paymentslip: Blob;
+  @Column({ type: 'longblob' }) // Use 'longblob' type for larger binary data
+  paymentslip: Buffer;
 
   @Column()
   maid_rating: number;
