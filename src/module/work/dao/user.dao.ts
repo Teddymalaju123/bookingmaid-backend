@@ -24,9 +24,10 @@ export class UserDao {
         }
     }
 
-    async findMaid(): Promise<ResUserDto[]> { // Update the return type
+    async findMaid(): Promise<User[]> {
         try {
-            const query = ` SELECT *
+          const query = `
+            SELECT *
             FROM user
             INNER JOIN usertype ON user.type_id = usertype.id_type
             LEFT JOIN maidwork ON maidwork.id_user = user.id_user
@@ -36,17 +37,20 @@ export class UserDao {
             FROM user
             INNER JOIN usertype ON user.type_id = usertype.id_type
             INNER JOIN maidwork ON maidwork.id_user = user.id_user
-            WHERE usertype.id_type = '3'; `;
-            const results = await this.userRepository.query(query);
-            if (!results || results.length === 0) {
-                throw new NotFoundException('No users with user types found.');
-            }
-            return results;
+            WHERE usertype.id_type = '3';
+          `;
+          const results = await this.userRepository.query(query);
+    
+          if (!results || results.length === 0) {
+            throw new NotFoundException('No maids found.');
+          }
+    
+          return results;
         } catch (error) {
-            throw new Error(`Failed to fetch users with user types: ${error.message}`);
+          throw new Error(`Failed to fetch maids: ${error.message}`);
         }
-    }
-
+      }
+      
     async findResident(): Promise<ResUserDto[]> { // Update the return type
         try {
             const query = ` SELECT * FROM user INNER JOIN usertype ON user.type_id = usertype.id_type WHERE usertype.id_type = '2' `;

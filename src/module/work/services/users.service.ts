@@ -24,7 +24,7 @@ export class UsersService {
     } catch (error) {
       throw new Error(`Failed to fetch users with user types: ${error.message}`);
     }
-  }
+}
 
 
   async findResident(): Promise<ResUserDto[]> {
