@@ -26,7 +26,7 @@ export class UserDao {
 
     async findMaid(): Promise<ResUserDto[]> { // Update the return type
         try {
-            const query = ` SELECT * FROM user INNER JOIN usertype ON user.type_id = usertype.id_type WHERE usertype.id_type = '3' `;
+            const query = ` SELECT * FROM user INNER JOIN usertype ON user.type_id = usertype.id_type INNER JOIN maidwork ON maidwork.id_user = user.id_user WHERE usertype.id_type = '3' `;
             const results = await this.userRepository.query(query);
             if (!results || results.length === 0) {
                 throw new NotFoundException('No users with user types found.');
