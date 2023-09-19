@@ -37,7 +37,6 @@ export class BooksService {
       if (!bookToDelete) {
         throw new Error('ไม่พบรายการการจองคิว');
       }
-      // Delete the user
       await this.bookRepository.remove(bookToDelete);
       return `รายการการจองคิว ${bookId} ถูกยกเลิกแล้ว.`;
     } catch (error) {
@@ -56,14 +55,6 @@ export class BooksService {
 
 
 }
-
-
-
-
-  // deleteUser(id: number) {
-  //   return this.userRepository.delete({ id });
-  // }
-
 
 
 

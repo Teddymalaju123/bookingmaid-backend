@@ -11,7 +11,7 @@ export class UserDao {
         private readonly userRepository: Repository<User>,
     ) { }
 
-    async findUsersWithUserTypes(): Promise<ResUserDto[]> { // Update the return type
+    async findUsersWithUserTypes(): Promise<ResUserDto[]> { 
         try {
             const query = ` SELECT * FROM user INNER JOIN usertype ON user.type_id = usertype.id_type`;
             const results = await this.userRepository.query(query);
