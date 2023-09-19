@@ -54,16 +54,8 @@ export class FeedbackService {
       throw new Error(`ไม่สามารถยกเลิกการจองคิว: ${error.message}`);
     }
   }
-
-
 }
 
-
-
-
-  // deleteUser(id: number) {
-  //   return this.userRepository.delete({ id });
-  // }
 
 
 

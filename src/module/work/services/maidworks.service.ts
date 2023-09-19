@@ -15,19 +15,15 @@ export class MaidWorkService {
 
   async findWork(id_user: number) {
     try {
-      // สร้างเงื่อนไขในการค้นหาข้อมูลการทำงาน (work) โดยใช้ id_user
       const findOptions: FindManyOptions = {
         where: {
           id_user: id_user,
         },
       };
-      
       const workData = await this.maidWorkRepository.find(findOptions);
-
       if (!workData || workData.length === 0) {
         throw new NotFoundException(`ไม่พบข้อมูลการทำงานสำหรับผู้ใช้รหัส ${id_user}`);
       }
-
       return workData;
     } catch (error) {
       throw new Error(`เกิดข้อผิดพลาดในการค้นหาข้อมูลการทำงาน: ${error.message}`);
