@@ -24,27 +24,20 @@ export class UserDao {
         }
     }
 
-    async findMaid(): Promise<User[]> {
+    async findMaid(): Promise<ResUserDto[]> {
         try {
           const query = `
             SELECT *
             FROM user
             INNER JOIN usertype ON user.type_id = usertype.id_type
-            LEFT JOIN maidwork ON maidwork.id_user = user.id_user
-            WHERE usertype.id_type = '3' AND maidwork.id_worktime IS NULL
-            UNION
-            SELECT *
-            FROM user
-            INNER JOIN usertype ON user.type_id = usertype.id_type
-            INNER JOIN maidwork ON maidwork.id_user = user.id_user
             WHERE usertype.id_type = '3';
           `;
           const results = await this.userRepository.query(query);
-    
+      
           if (!results || results.length === 0) {
             throw new NotFoundException('No maids found.');
           }
-    
+      
           return results;
         } catch (error) {
           throw new Error(`Failed to fetch maids: ${error.message}`);
