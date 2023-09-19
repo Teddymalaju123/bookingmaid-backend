@@ -1,4 +1,4 @@
-import { Controller, Post, Delete, Body, Param, HttpException, HttpStatus, Get } from '@nestjs/common';
+import { Controller, Post, Delete, Body, Param, HttpException, HttpStatus, Get, NotFoundException } from '@nestjs/common';
 import { UsersService } from '../services/users.service';
 
 
@@ -27,6 +27,14 @@ export class UsersController {
     return this.userService.findResident();
   }
 
+  @Get('/get-resident/:id_user') 
+  async findResidentById(@Param('id_user') id_user: number) {
+    const user = await this.userService.findResidentById(id_user);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+    return user;
+  }
 
   @Post('/save')
   async createUser(@Body() createUserDto: CreateUserDto) {

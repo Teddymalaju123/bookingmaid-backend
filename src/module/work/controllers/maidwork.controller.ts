@@ -1,9 +1,10 @@
-import { Controller, Post, Delete, Body, Param, HttpException, HttpStatus, Get } from '@nestjs/common';
+import { Controller, Post, Delete, Body, Param, HttpException, HttpStatus, Get, InternalServerErrorException } from '@nestjs/common';
 import { MaidWorkService } from '../services/maidworks.service';
 
 
 @Controller('maidwork')
 export class MaidWorkController {
+  [x: string]: any;
   constructor(private maidService: MaidWorkService) { }
 
   @Get('/users-with-types')
@@ -12,9 +13,9 @@ export class MaidWorkController {
   }
 
 
-  @Get("/getwork")
-  getUsers() {
-    return this.maidService.findUsers();
+  @Get("/getwork/:id_user")
+  getWork(@Param('id_user') id_user: number) {
+    return this.maidService.findWork(id_user);
   }
 
   @Post('/savework')
@@ -46,15 +47,13 @@ export class MaidWorkController {
   }
 
   @Delete('/deletemaid/:id')
-  async deleteMaid(@Param('id') maidId: string) {
+  async deleteMaid(@Param('id') id_worktime: number): Promise<string> {
     try {
-      const id = parseInt(maidId, 10);
-      const result = await this.maidService.deleteMaid(id);
-      return { message: result };
+      const resultMessage = await this.maidService.deleteMaid(id_worktime);
+      return resultMessage;
     } catch (error) {
-      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+      throw new InternalServerErrorException(error.message);
   }
-
+}
 
 }

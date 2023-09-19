@@ -1,7 +1,7 @@
 
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { FindManyOptions, Repository } from 'typeorm';
 import { UserDao } from '../dao/user.dao';
 import { Maidwork } from 'src/entities/maidwork';
 
@@ -13,8 +13,25 @@ export class MaidWorkService {
     @InjectRepository(Maidwork) private maidWorkRepository: Repository<Maidwork>,
   ) { }
 
-  findUsers() {
-    return this.maidWorkRepository.find();
+  async findWork(id_user: number) {
+    try {
+      // สร้างเงื่อนไขในการค้นหาข้อมูลการทำงาน (work) โดยใช้ id_user
+      const findOptions: FindManyOptions = {
+        where: {
+          id_user: id_user,
+        },
+      };
+      
+      const workData = await this.maidWorkRepository.find(findOptions);
+
+      if (!workData || workData.length === 0) {
+        throw new NotFoundException(`ไม่พบข้อมูลการทำงานสำหรับผู้ใช้รหัส ${id_user}`);
+      }
+
+      return workData;
+    } catch (error) {
+      throw new Error(`เกิดข้อผิดพลาดในการค้นหาข้อมูลการทำงาน: ${error.message}`);
+    }
   }
 
   async createMaidwork(maidDetails: CreateMaidDto) {
@@ -45,17 +62,16 @@ export class MaidWorkService {
     }
   }
 
-  async deleteMaid(maidId: number) {
+  async deleteMaid(id_worktime: number): Promise<string> {
     try {
-      // Find the user by ID
-      const maidToDelete = await this.maidWorkRepository.findOneById(maidId);
-
-      if (!maidToDelete) {
-        throw new Error('ไม่พบตารางการทำงาน');
+      // Delete the maid work using id_worktime
+      const deleteResult = await this.maidWorkRepository.delete(id_worktime);
+  
+      if (deleteResult.affected === 0) {
+        throw new NotFoundException('ไม่พบตารางการทำงาน');
       }
-      // Delete the user
-      await this.maidWorkRepository.remove(maidToDelete);
-      return `ตารางการทำงาน ${maidId} ได้ลบแล้ว.`;
+  
+      return `ตารางการทำงาน ${id_worktime} ได้ลบแล้ว.`;
     } catch (error) {
       throw new Error(`ไม่สามารถลบตารางงาน: ${error.message}`);
     }

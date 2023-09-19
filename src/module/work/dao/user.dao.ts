@@ -57,6 +57,25 @@ export class UserDao {
         }
     }
 
+    async findResidentById(id_user: number): Promise<ResUserDto[]> {
+        try {
+          const query = `
+            SELECT * 
+            FROM user 
+            INNER JOIN usertype ON user.type_id = usertype.id_type 
+            WHERE user.id_user = ?;`; // Use a prepared statement with '?'
+      
+          const results = await this.userRepository.query(query, [id_user]); // Pass [id_user] as an array
+      
+          if (!results || results.length === 0) {
+            throw new NotFoundException('No user with this id_user found.');
+          }
+      
+          return results;
+        } catch (error) {
+          throw new Error(`Failed to fetch user with id_user ${id_user}: ${error.message}`);
+        }
+      }
 
 
 
