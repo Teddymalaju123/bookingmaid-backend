@@ -44,7 +44,7 @@ export class UserDao {
         }
       }
       
-    async findResident(): Promise<ResUserDto[]> { // Update the return type
+    async findResident(): Promise<ResUserDto[]> { 
         try {
             const query = ` SELECT * FROM user INNER JOIN usertype ON user.type_id = usertype.id_type WHERE usertype.id_type = '2' `;
             const results = await this.userRepository.query(query);
@@ -63,9 +63,9 @@ export class UserDao {
             SELECT * 
             FROM user 
             INNER JOIN usertype ON user.type_id = usertype.id_type 
-            WHERE user.id_user = ?;`; // Use a prepared statement with '?'
+            WHERE user.id_user = ?;`; 
       
-          const results = await this.userRepository.query(query, [id_user]); // Pass [id_user] as an array
+          const results = await this.userRepository.query(query, [id_user]); 
       
           if (!results || results.length === 0) {
             throw new NotFoundException('No user with this id_user found.');

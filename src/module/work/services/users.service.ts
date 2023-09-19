@@ -90,13 +90,10 @@ export class UsersService {
 
   async deleteUser(userId: number) {
     try {
-      // Find the user by ID
       const userToDelete = await this.userRepository.findOneById(userId);
-
       if (!userToDelete) {
         throw new Error('User not found');
       }
-      // Delete the user
       await this.userRepository.remove(userToDelete);
       return `User with ID ${userId} has been deleted successfully.`;
     } catch (error) {
@@ -112,8 +109,6 @@ export class UsersService {
       throw new Error(`Failed to fetch users with user types: ${error.message}`);
     }
   }
-
-
 }
 
 

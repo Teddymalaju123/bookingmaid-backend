@@ -41,13 +41,10 @@ export class FeedbackService {
 
   async deleteFeed(feedId: number) {
     try {
-      // Find the user by ID
       const feedToDelete = await this.feedBackRepository.findOneById(feedId);
-
       if (!feedToDelete) {
         throw new Error('ไม่พบรายการการจองคิว');
       }
-      // Delete the user
       await this.feedBackRepository.remove(feedToDelete);
       return `รายการการจองคิว ${feedId} ถูกยกเลิกแล้ว.`;
     } catch (error) {

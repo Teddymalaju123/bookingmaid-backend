@@ -15,7 +15,7 @@ export class Booking {
   @Column()
   service_price: number;
 
-  @Column({ type: 'longblob' }) // Use 'longblob' type for larger binary data
+  @Column({ type: 'longblob' }) 
   paymentslip: Buffer;
 
   @Column()

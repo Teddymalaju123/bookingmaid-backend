@@ -31,9 +31,7 @@ export class BooksService {
 
   async deleteBook(bookId: number) {
     try {
-      // Find the user by ID
       const bookToDelete = await this.bookRepository.findOneById(bookId);
-
       if (!bookToDelete) {
         throw new Error('ไม่พบรายการการจองคิว');
       }

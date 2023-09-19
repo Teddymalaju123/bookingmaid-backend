@@ -60,7 +60,6 @@ export class MaidWorkService {
 
   async deleteMaid(id_worktime: number): Promise<string> {
     try {
-      // Delete the maid work using id_worktime
       const deleteResult = await this.maidWorkRepository.delete(id_worktime);
   
       if (deleteResult.affected === 0) {
@@ -84,14 +83,3 @@ export class MaidWorkService {
 
 
 }
-
-
-
-
-  // deleteUser(id: number) {
-  //   return this.userRepository.delete({ id });
-  // }
-
-
-
-
