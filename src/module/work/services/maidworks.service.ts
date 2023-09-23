@@ -4,14 +4,30 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { FindManyOptions, Repository } from 'typeorm';
 import { UserDao } from '../dao/user.dao';
 import { Maidwork } from 'src/entities/maidwork';
+import { MaidworkDao } from '../dao/maidwork.dao';
 
 
 @Injectable()
 export class MaidWorkService {
   constructor(
     private readonly userDao: UserDao,
+    private readonly maiddao: MaidworkDao,
     @InjectRepository(Maidwork) private maidWorkRepository: Repository<Maidwork>,
   ) { }
+
+  async findAllWork() {
+    try {
+      const results = await this.maiddao.findAllWork();
+  
+      if (!results || results.length === 0) {
+        throw new NotFoundException('Failed');
+      }
+      
+      return results;
+    } catch (error) {
+      throw new Error(`Failed: ${error.message}`);
+    }
+  }
 
   async findWork(id_user: number) {
     try {
@@ -41,22 +57,22 @@ export class MaidWorkService {
     }
   }
 
-  async editMaid(maidDetails: CreateMaidDto) {
-    try {
-      const existingMaid = await this.maidWorkRepository.findOneById(maidDetails.id_worktime);
-      console.log(existingMaid);
+  // async editMaid(maidDetails: CreateMaidDto) {
+  //   try {
+  //     const existingMaid = await this.maidWorkRepository.findOneById(maidDetails.id_worktime);
+  //     console.log(existingMaid);
 
-      if (!existingMaid) {
-        throw new Error('ไม่พบตารางการทำงาน');
-      }
-      existingMaid.workingtime = maidDetails.workingtime;
-      existingMaid.endworking = maidDetails.endworking;
-      existingMaid.status = maidDetails.status;
-      return await this.maidWorkRepository.save(existingMaid);
-    } catch (error) {
-      throw new Error(error);
-    }
-  }
+  //     if (!existingMaid) {
+  //       throw new Error('ไม่พบตารางการทำงาน');
+  //     }
+  //     existingMaid.workingtime = maidDetails.workingtime;
+  //     existingMaid.endworking = maidDetails.endworking;
+  //     existingMaid.status = maidDetails.status;
+  //     return await this.maidWorkRepository.save(existingMaid);
+  //   } catch (error) {
+  //     throw new Error(error);
+  //   }
+  // }
 
   async deleteMaid(id_worktime: number): Promise<string> {
     try {

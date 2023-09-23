@@ -31,5 +31,11 @@ export class User {
   maid_rating: number;
 
   @Column()
+  age: number;
+
+  @Column()
+  address: string;
+
+  @Column()
   type_id: number;
 }

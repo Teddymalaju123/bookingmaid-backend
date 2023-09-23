@@ -17,10 +17,11 @@ import { MaidWorkService } from './services/maidworks.service';
 import { LoginController } from '../auth/controller/login.controller';
 import { LoginService } from '../auth/service/login.service';
 import { FeedbackDao } from './dao/feedback.dao';
+import { MaidworkDao } from './dao/maidwork.dao';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User, UserType, Booking, Feedback, Maidwork])],
   controllers: [UsersController, BooksController, FeedBackController, MaidWorkController, LoginController],
-  providers: [UsersService, UserDao, FeedbackDao, BooksService, FeedbackService, MaidWorkService, LoginService],
+  providers: [UsersService, UserDao, FeedbackDao, BooksService, FeedbackService, MaidWorkService, LoginService, MaidworkDao],
 })
 export class WorkModule { }

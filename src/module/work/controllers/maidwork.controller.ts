@@ -7,11 +7,11 @@ export class MaidWorkController {
   [x: string]: any;
   constructor(private maidService: MaidWorkService) { }
 
-  @Get('/users-with-types')
-  async findUsersWithUserTypes() {
-    return this.maidService.findUsersWithUserTypes();
-  }
 
+  @Get('/getwork')
+  async findAllWork() {
+    return this.maidService.findAllWork()
+  }
 
   @Get("/getwork/:id_user")
   getWork(@Param('id_user') id_user: number) {
@@ -31,20 +31,20 @@ export class MaidWorkController {
     }
   }
 
-  @Post('/editmaid')
-  async editMaid(@Body() createMaidDto: CreateMaidDto) {
-    try {
-      const updatedMaid = await this.maidService.editMaid(createMaidDto);
-      return updatedMaid;
-    } catch (error) {
-      console.log(error);
+  // @Post('/editmaid')
+  // async editMaid(@Body() createMaidDto: CreateMaidDto) {
+  //   try {
+  //     const updatedMaid = await this.maidService.editMaid(createMaidDto);
+  //     return updatedMaid;
+  //   } catch (error) {
+  //     console.log(error);
 
-      throw new HttpException(
-        error,
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
-  }
+  //     throw new HttpException(
+  //       error,
+  //       HttpStatus.INTERNAL_SERVER_ERROR,
+  //     );
+  //   }
+  // }
 
   @Delete('/deletemaid/:id')
   async deleteMaid(@Param('id') id_worktime: number): Promise<string> {

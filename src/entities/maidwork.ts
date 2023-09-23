@@ -9,11 +9,11 @@ export class Maidwork {
   @Column()
   status: string;
 
-  @Column({ type: 'datetime'})
-  workingtime : Date;
+  @Column()
+  day : Date;
 
-  @Column({ type: 'datetime'})
-  endworking: Date;
+  @Column()
+  id_timeworktype: number;
 
   @Column()
   id_user : number;
