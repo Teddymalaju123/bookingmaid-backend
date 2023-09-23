@@ -31,20 +31,21 @@ export class MaidWorkController {
     }
   }
 
-  // @Post('/editmaid')
-  // async editMaid(@Body() createMaidDto: CreateMaidDto) {
-  //   try {
-  //     const updatedMaid = await this.maidService.editMaid(createMaidDto);
-  //     return updatedMaid;
-  //   } catch (error) {
-  //     console.log(error);
+  @Post('/editmaid/:id_worktime')
+async editMaid(@Param('id_worktime') idWorktime: number, @Body() createMaidDto: CreateMaidDto) {
+  try {
+    // ดำเนินการค้นหาแม่บ้านที่ต้องการแก้ไขโดยใช้ id_worktime และแก้ไขข้อมูล
+    const updatedMaid = await this.maidService.editMaid(idWorktime, createMaidDto);
+    return updatedMaid;
+  } catch (error) {
+    console.log(error);
 
-  //     throw new HttpException(
-  //       error,
-  //       HttpStatus.INTERNAL_SERVER_ERROR,
-  //     );
-  //   }
-  // }
+    throw new HttpException(
+      error,
+      HttpStatus.INTERNAL_SERVER_ERROR,
+    );
+  }
+}
 
   @Delete('/deletemaid/:id')
   async deleteMaid(@Param('id') id_worktime: number): Promise<string> {

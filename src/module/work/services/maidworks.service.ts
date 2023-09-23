@@ -57,22 +57,24 @@ export class MaidWorkService {
     }
   }
 
-  // async editMaid(maidDetails: CreateMaidDto) {
-  //   try {
-  //     const existingMaid = await this.maidWorkRepository.findOneById(maidDetails.id_worktime);
-  //     console.log(existingMaid);
-
-  //     if (!existingMaid) {
-  //       throw new Error('ไม่พบตารางการทำงาน');
-  //     }
-  //     existingMaid.workingtime = maidDetails.workingtime;
-  //     existingMaid.endworking = maidDetails.endworking;
-  //     existingMaid.status = maidDetails.status;
-  //     return await this.maidWorkRepository.save(existingMaid);
-  //   } catch (error) {
-  //     throw new Error(error);
-  //   }
-  // }
+  async editMaid(idWorktime: number, maidDetails: CreateMaidDto) {
+    try {
+      const existingMaid = await this.maidWorkRepository.findOne({ where: { id_worktime: idWorktime } });
+      console.log(existingMaid);
+  
+      if (!existingMaid) {
+        throw new Error('ไม่พบตารางการทำงาน');
+      }
+      existingMaid.day = maidDetails.day;
+      existingMaid.id_timeworktype = maidDetails.id_timeworktype;
+      existingMaid.status = maidDetails.status;
+  
+      const updatedMaid = await this.maidWorkRepository.save(existingMaid);
+      return updatedMaid;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
 
   async deleteMaid(id_worktime: number): Promise<string> {
     try {
