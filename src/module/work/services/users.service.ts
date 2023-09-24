@@ -53,6 +53,7 @@ export class UsersService {
       roomnumber: resUsers[0].roomnumber,
       roomsize: resUsers[0].roomsize,
       maid_rating: resUsers[0].maid_rating,
+      id_card: resUsers[0].id_card,
       age: resUsers[0].age,
       address: resUsers[0].address,
       type_id: resUsers[0].type_id

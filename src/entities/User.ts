@@ -31,6 +31,9 @@ export class User {
   maid_rating: number;
 
   @Column()
+  id_card: number;
+
+  @Column()
   age: number;
 
   @Column()

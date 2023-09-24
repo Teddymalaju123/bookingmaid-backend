@@ -8,6 +8,7 @@ interface CreateUserDto {
   phone: string;
   roomnumber: string;
   roomsize: string;
+  id_card: number;
   age: number;
   address: string;
   maid_rating: number;
