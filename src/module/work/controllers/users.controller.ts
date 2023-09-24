@@ -49,20 +49,16 @@ export class UsersController {
     }
   }
 
-  @Post('/edit')
-  async editUser(@Body() createUserDto: CreateUserDto) {
-    try {
-      const updatedUser = await this.userService.editUser(createUserDto);
-      return updatedUser;
-    } catch (error) {
-      console.log(error);
-
-      throw new HttpException(
-        error,
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
+  @Post('/edit/:id_user')
+  async editUser(@Param('id_user') idUser: number, @Body() createUserDto: CreateUserDto) {
+  try {
+    const updatedUser = await this.userService.editUser(idUser, createUserDto);
+    return updatedUser;
+  } catch (error) {
+    console.log(error);
+    throw new HttpException('ไม่สามารถแก้ไขข้อมูลผู้ใช้ได้', HttpStatus.INTERNAL_SERVER_ERROR);
   }
+}
 
   @Delete('/delete/:id')
   async deleteUser(@Param('id') userId: string) {

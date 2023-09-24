@@ -74,20 +74,27 @@ export class UsersService {
     }
   }
 
-  async editUser(userDetails: CreateUserDto) {
+  async editUser(idUser: number, userDetails: CreateUserDto) {
     try {
-      const existingUser = await this.userRepository.findOneById(userDetails.id_user);
+      const existingUser = await this.userRepository.findOneById(idUser); 
       console.log(existingUser);
-
+  
       if (!existingUser) {
         throw new Error('User not found');
       }
+      
       existingUser.username = userDetails.username;
       existingUser.password = userDetails.password;
       existingUser.fname = userDetails.fname;
-      return await this.userRepository.save(existingUser);
+      existingUser.lname = userDetails.lname;
+      existingUser.phone = userDetails.phone;
+      existingUser.age = userDetails.age;
+      existingUser.address = userDetails.address;
+      
+      const updatedUser = await this.userRepository.save(existingUser);
+      return updatedUser;
     } catch (error) {
-      throw new Error(error);
+      throw new Error(error.message);
     }
   }
 
