@@ -22,7 +22,7 @@ export class LoginService {
       INNER JOIN usertype ON user.type_id = usertype.id_type
       WHERE username = ? and password = ? and usertype.type_name = ?
     `;
-    const [user] = await this.userRepository.query(query, [loginReq.username, loginReq.password]);
+    const [user] = await this.userRepository.query(query, [loginReq.username, loginReq.password,loginReq.type_name]);
     if (!user) {
       throw new NotFoundException('User not found');
     }

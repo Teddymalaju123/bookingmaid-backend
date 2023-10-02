@@ -5,12 +5,15 @@ import { LoginService } from '../service/login.service';
 
 @Controller('auth')
 export class LoginController {
-  constructor(private olginService: LoginService) { }
+  constructor(private loginService: LoginService) { }
 
   @Post('/login')
   async createUser(@Body() loginDto: LoginDto) {
     try {
-      const newUser = await this.olginService.login(loginDto);
+      // Log the loginDto
+      console.log('Received login DTO:', loginDto);
+
+      const newUser = await this.loginService.login(loginDto);
       return newUser;
     } catch (error) {
       throw new HttpException(
