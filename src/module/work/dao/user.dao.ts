@@ -57,7 +57,7 @@ export class UserDao {
         }
     }
 
-    async findResidentById(id_user: number): Promise<ResUserDto[]> {
+    async findResidentById(id_user: number): Promise<ResUserDto> {
         try {
           const query = `
             SELECT * 
