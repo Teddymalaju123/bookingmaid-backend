@@ -10,7 +10,7 @@ export class MaidworkDao {
         @InjectRepository(Maidwork)
         private readonly maidworkRepository: Repository<Maidwork>,
     ) { }
-    async findAllWork() { 
+    async findAllWork() {
         try {
             const query = ` SELECT * FROM maidwork 
             INNER JOIN user on maidwork.id_user = user.id_user 
@@ -26,7 +26,7 @@ export class MaidworkDao {
         }
     }
 
-    
+
 
 
 

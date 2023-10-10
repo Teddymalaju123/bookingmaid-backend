@@ -24,7 +24,7 @@ export class UsersService {
     } catch (error) {
       throw new Error(`Failed to fetch users with user types: ${error.message}`);
     }
-}
+  }
 
 
   async findResident(): Promise<ResUserDto[]> {
@@ -55,13 +55,13 @@ export class UsersService {
 
   async editUser(idUser: number, userDetails: CreateUserDto) {
     try {
-      const existingUser = await this.userRepository.findOneById(idUser); 
+      const existingUser = await this.userRepository.findOneById(idUser);
       console.log(existingUser);
-  
+
       if (!existingUser) {
         throw new Error('User not found');
       }
-      
+
       existingUser.username = userDetails.username;
       existingUser.password = userDetails.password;
       existingUser.fname = userDetails.fname;
@@ -69,7 +69,7 @@ export class UsersService {
       existingUser.phone = userDetails.phone;
       existingUser.age = userDetails.age;
       existingUser.address = userDetails.address;
-      
+
       const updatedUser = await this.userRepository.save(existingUser);
       return updatedUser;
     } catch (error) {

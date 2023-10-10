@@ -10,7 +10,7 @@ export class FeedbackDao {
         @InjectRepository(Feedback)
         private readonly feedbackRepository: Repository<Feedback>,
     ) { }
-    async findFeedback() { 
+    async findFeedback() {
         try {
             const query = ` SELECT * FROM feedback join user on feedback.id_user = user.id_user WHERE user.id_user `;
             const results = await this.feedbackRepository.query(query);

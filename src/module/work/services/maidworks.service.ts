@@ -18,11 +18,11 @@ export class MaidWorkService {
   async findAllWork() {
     try {
       const results = await this.maiddao.findAllWork();
-  
+
       if (!results || results.length === 0) {
         throw new NotFoundException('Failed');
       }
-      
+
       return results;
     } catch (error) {
       throw new Error(`Failed: ${error.message}`);
@@ -61,14 +61,14 @@ export class MaidWorkService {
     try {
       const existingMaid = await this.maidWorkRepository.findOne({ where: { id_worktime: idWorktime } });
       console.log(existingMaid);
-  
+
       if (!existingMaid) {
         throw new Error('ไม่พบตารางการทำงาน');
       }
       existingMaid.day = maidDetails.day;
       existingMaid.id_timeworktype = maidDetails.id_timeworktype;
       existingMaid.status = maidDetails.status;
-  
+
       const updatedMaid = await this.maidWorkRepository.save(existingMaid);
       return updatedMaid;
     } catch (error) {
@@ -79,11 +79,11 @@ export class MaidWorkService {
   async deleteMaid(id_worktime: number): Promise<string> {
     try {
       const deleteResult = await this.maidWorkRepository.delete(id_worktime);
-  
+
       if (deleteResult.affected === 0) {
         throw new NotFoundException('ไม่พบตารางการทำงาน');
       }
-  
+
       return `ตารางการทำงาน ${id_worktime} ได้ลบแล้ว.`;
     } catch (error) {
       throw new Error(`ไม่สามารถลบตารางงาน: ${error.message}`);

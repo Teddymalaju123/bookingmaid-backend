@@ -10,7 +10,6 @@ export class LoginController {
   @Post('/login')
   async createUser(@Body() loginDto: LoginDto) {
     try {
-      // Log the loginDto
       console.log('Received login DTO:', loginDto);
 
       const newUser = await this.loginService.login(loginDto);
