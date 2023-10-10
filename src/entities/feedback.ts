@@ -11,4 +11,7 @@ export class Feedback {
 
   @Column()
   id_user : number;
+
+  @Column()
+  id_maid : number;
 }

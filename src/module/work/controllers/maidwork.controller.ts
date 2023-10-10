@@ -34,7 +34,6 @@ export class MaidWorkController {
   @Post('/editmaid/:id_worktime')
 async editMaid(@Param('id_worktime') idWorktime: number, @Body() createMaidDto: CreateMaidDto) {
   try {
-    // ดำเนินการค้นหาแม่บ้านที่ต้องการแก้ไขโดยใช้ id_worktime และแก้ไขข้อมูล
     const updatedMaid = await this.maidService.editMaid(idWorktime, createMaidDto);
     return updatedMaid;
   } catch (error) {
