@@ -19,6 +19,12 @@ export class User {
   lname: string;
 
   @Column()
+  nickname: string;
+
+  @Column({ type: 'longblob' }) 
+  profile: Buffer;
+
+  @Column()
   phone: string;
 
   @Column()
@@ -34,7 +40,7 @@ export class User {
   id_card: number;
 
   @Column()
-  age: number;
+  birthday: number;
 
   @Column()
   address: string;

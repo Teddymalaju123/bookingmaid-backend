@@ -67,7 +67,7 @@ export class UsersService {
       existingUser.fname = userDetails.fname;
       existingUser.lname = userDetails.lname;
       existingUser.phone = userDetails.phone;
-      existingUser.age = userDetails.age;
+      existingUser.birthday = userDetails.birthday;
       existingUser.address = userDetails.address;
 
       const updatedUser = await this.userRepository.save(existingUser);
