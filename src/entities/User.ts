@@ -1,3 +1,4 @@
+
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity({ name: 'user' })
@@ -39,8 +40,8 @@ export class User {
   @Column()
   id_card: number;
 
-  @Column()
-  birthday: number;
+  @Column( { type: 'date' })
+  birthday: Date;
 
   @Column()
   address: string;

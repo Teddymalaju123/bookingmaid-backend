@@ -11,7 +11,7 @@ interface CreateUserDto {
   roomnumber: string;
   roomsize: string;
   id_card: number;
-  birthday: number;
+  birthday: Date;
   address: string;
   maid_rating: number;
   id_type: number;

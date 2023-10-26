@@ -12,7 +12,7 @@ interface ResUserDto {
   maid_rating: number
   password: string
   id_card: number
-  birthday:number
+  birthday:Date
   address:string
   type_id: number
   type_name: string
