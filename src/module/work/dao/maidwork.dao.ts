@@ -30,10 +30,10 @@ export class MaidworkDao {
         try {
             const query = `
           SELECT maidwork.*, worktime_type.*
-FROM maidwork
-INNER JOIN worktime_type ON worktime_type.id_worktimetype = maidwork.id_timeworktype
-WHERE maidwork.id_user = ?;
-`;
+            FROM maidwork
+            INNER JOIN worktime_type ON worktime_type.id_worktimetype = maidwork.id_timeworktype
+            WHERE maidwork.id_user = ?;
+            `;
 
             const results = await this.maidworkRepository.query(query, [id_user]);
 
