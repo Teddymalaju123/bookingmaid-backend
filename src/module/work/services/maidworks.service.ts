@@ -29,21 +29,9 @@ export class MaidWorkService {
     }
   }
 
-  async findWork(id_user: number) {
-    try {
-      const findOptions: FindManyOptions = {
-        where: {
-          id_user: id_user,
-        },
-      };
-      const workData = await this.maidWorkRepository.find(findOptions);
-      if (!workData || workData.length === 0) {
-        throw new NotFoundException(`ไม่พบข้อมูลการทำงานสำหรับผู้ใช้รหัส ${id_user}`);
-      }
-      return workData;
-    } catch (error) {
-      throw new Error(`เกิดข้อผิดพลาดในการค้นหาข้อมูลการทำงาน: ${error.message}`);
-    }
+  async findWork(id_user: number): Promise<Maidwork | null> {
+    const resUsers: ResUserDto = await this.maiddao.findMaidWorkById(id_user);
+    return resUsers;
   }
 
   async createMaidwork(maidDetails: CreateMaidDto) {
