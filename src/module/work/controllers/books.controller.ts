@@ -6,16 +6,17 @@ import { BooksService } from '../services/booking.service';
 export class BooksController {
   constructor(private bookService: BooksService) { }
 
-  @Get('/users-with-types')
-  async findUsersWithUserTypes() {
-    return this.bookService.findUsersWithUserTypes();
-  }
-
 
   @Get("/get")
   getBooks() {
     return this.bookService.findBook();
   }
+
+  @Get("/get-book-maid")
+  getMaid() {
+    return this.bookService.findBookByMaid();
+  }
+
 
   @Post('/save')
   async createBook(@Body() createBookDto: CreateBookDto) {

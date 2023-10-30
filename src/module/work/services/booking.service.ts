@@ -4,17 +4,27 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserDao } from '../dao/user.dao';
 import { Booking } from 'src/entities/booking';
+import { BookingDao } from '../dao/books.dao';
 
 
 @Injectable()
 export class BooksService {
   constructor(
-    private readonly userDao: UserDao,
+    private readonly bookDao: BookingDao,
     @InjectRepository(Booking) private bookRepository: Repository<Booking>,
   ) { }
 
   findBook() {
     return this.bookRepository.find();
+  }
+
+  async findBookByMaid(): Promise<ResUserDto[]> {
+    try {
+      const usersWithTypes = await this.bookDao.findBookByMaid();
+      return usersWithTypes;
+    } catch (error) {
+      throw new Error(`Failed to fetch users with user types: ${error.message}`);
+    }
   }
 
   async createBook(bookDetails: CreateBookDto) {
@@ -41,16 +51,6 @@ export class BooksService {
       throw new Error(`ไม่สามารถยกเลิกการจองคิว: ${error.message}`);
     }
   }
-
-  async findUsersWithUserTypes(): Promise<ResUserDto[]> {
-    try {
-      const usersWithTypes = await this.userDao.findUsersWithUserTypes();
-      return usersWithTypes;
-    } catch (error) {
-      throw new Error(`Failed to fetch users with user types: ${error.message}`);
-    }
-  }
-
 
 }
 

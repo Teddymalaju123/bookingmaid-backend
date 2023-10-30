@@ -55,7 +55,7 @@ export class MaidWorkService {
       }
       existingMaid.day = maidDetails.day;
       existingMaid.id_timeworktype = maidDetails.id_timeworktype;
-      existingMaid.status = maidDetails.status;
+      existingMaid.statuswork = maidDetails.statuswork;
 
       const updatedMaid = await this.maidWorkRepository.save(existingMaid);
       return updatedMaid;

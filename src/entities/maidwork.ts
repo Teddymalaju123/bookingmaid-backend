@@ -7,7 +7,7 @@ export class Maidwork {
   id_worktime  : number;
 
   @Column()
-  status: string;
+  statuswork: number;
 
   @Column()
   day : Date;

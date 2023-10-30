@@ -15,7 +15,8 @@ export class MaidworkDao {
             const query = ` SELECT * FROM maidwork 
             INNER JOIN user on maidwork.id_user = user.id_user 
             INNER JOIN worktime_type on worktime_type.id_worktimetype = maidwork.id_timeworktype
-            WHERE user.type_id = '3' `;
+            INNER JOIN status_type on status_type.id_status = maidwork.statuswork
+            WHERE user.type_id = '3';`;
             const results = await this.maidworkRepository.query(query);
             if (!results || results.length === 0) {
                 throw new NotFoundException('Failed');
@@ -29,10 +30,11 @@ export class MaidworkDao {
     async findMaidWorkById(id_user: number): Promise<ResUserDto> {
         try {
             const query = `
-          SELECT maidwork.*, worktime_type.*
+            SELECT maidwork.*, worktime_type.*,status_type.*
             FROM maidwork
-            INNER JOIN worktime_type ON worktime_type.id_worktimetype = maidwork.id_timeworktype
-            WHERE maidwork.id_user = ?;
+                        INNER JOIN worktime_type ON worktime_type.id_worktimetype = maidwork.id_timeworktype
+                        INNER JOIN status_type ON status_type.id_status = maidwork.statuswork
+                        WHERE maidwork.id_user = ?;
             `;
 
             const results = await this.maidworkRepository.query(query, [id_user]);

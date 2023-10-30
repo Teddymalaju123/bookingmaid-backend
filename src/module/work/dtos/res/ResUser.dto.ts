@@ -19,7 +19,7 @@ interface ResUserDto {
   type_description: string
   id_type: number
   id_worktime: number
-  status: string
+  statuswork: number
   day : Date
   id_timeworktype : number
 }

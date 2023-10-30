@@ -28,7 +28,7 @@ export class Booking {
   maid_rating: number;
 
   @Column()
-  status: string;
+  status: number;
 
   @Column()
   user_booking: number;
