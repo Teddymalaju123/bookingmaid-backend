@@ -6,11 +6,14 @@ export class Booking {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   booking_id: number;
 
-  @Column({ type: 'datetime' })
+  @Column({ type: 'date' })
   booking_date: Date;
 
-  @Column({ type: 'datetime' })
-  work_hour: Date;
+  @Column()
+  work_hour: number;
+
+  @Column({ type: 'time' })
+  start_work: Date;
 
   @Column()
   service_price: number;
