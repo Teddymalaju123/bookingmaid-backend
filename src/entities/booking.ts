@@ -16,6 +16,9 @@ export class Booking {
   start_work: Date;
 
   @Column()
+  descriptmaid: string;
+
+  @Column()
   service_price: number;
 
   @Column({ type: 'longblob' }) 
