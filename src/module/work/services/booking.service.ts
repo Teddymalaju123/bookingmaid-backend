@@ -18,13 +18,15 @@ export class BooksService {
     return this.bookRepository.find();
   }
 
-  async findBookByMaid(): Promise<ResUserDto[]> {
-    try {
-      const usersWithTypes = await this.bookDao.findBookByMaid();
-      return usersWithTypes;
-    } catch (error) {
-      throw new Error(`Failed to fetch users with user types: ${error.message}`);
-    }
+
+  async findBookByResident(booking_id: number): Promise<Booking | null> {
+    const resBook: ReBookDto = await this.bookDao.findBookByResident(booking_id);
+    return resBook;
+  }
+
+  async findBookByMaid(maid_id: number): Promise<Booking | null> {
+    const resBook: ReBookDto = await this.bookDao.findBookByMaid(maid_id);
+    return resBook;
   }
 
   async createBook(bookDetails: CreateBookDto) {

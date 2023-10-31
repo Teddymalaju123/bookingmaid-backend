@@ -1,4 +1,4 @@
-import { Controller, Post, Delete, Body, Param, HttpException, HttpStatus, Get } from '@nestjs/common';
+import { Controller, Post, Delete, Body, Param, HttpException, HttpStatus, Get, NotFoundException } from '@nestjs/common';
 import { BooksService } from '../services/booking.service';
 
 
@@ -12,11 +12,23 @@ export class BooksController {
     return this.bookService.findBook();
   }
 
-  @Get("/get-book-maid")
-  getMaid() {
-    return this.bookService.findBookByMaid();
+  @Get("/get-book-resident/:idbook")
+async getBooksresident(@Param('idbook') booking_id: number) {
+  const booking = await this.bookService.findBookByResident(booking_id);
+  if (!booking) {
+    throw new NotFoundException('Booking not found');
   }
+  return booking;
+}
 
+@Get("/get-book-maid/:idmaid")
+async getBooksMaid(@Param('idmaid') maid_id: number) {
+  const booking = await this.bookService.findBookByMaid(maid_id);
+  if (!booking) {
+    throw new NotFoundException('Booking not found');
+  }
+  return booking;
+}
 
   @Post('/save')
   async createBook(@Body() createBookDto: CreateBookDto) {
