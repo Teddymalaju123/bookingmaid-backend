@@ -46,6 +46,21 @@ export class MaidWorkController {
     }
   }
 
+  @Post('/editmaidworktime/:id_worktime')
+  async editMaidWorkTime(@Param('id_worktime') idWorktime: number, @Body() createMaidDto: CreateMaidDto) {
+    try {
+      const updatedMaid = await this.maidService.editMaidWorkTime(idWorktime, createMaidDto);
+      return updatedMaid;
+    } catch (error) {
+      console.log(error);
+
+      throw new HttpException(
+        error,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
   @Delete('/deletemaid/:id')
   async deleteMaid(@Param('id') id_worktime: number): Promise<string> {
     try {

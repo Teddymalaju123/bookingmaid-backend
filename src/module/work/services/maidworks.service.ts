@@ -64,6 +64,23 @@ export class MaidWorkService {
     }
   }
 
+  async editMaidWorkTime(idWorktime: number, maidDetails: CreateMaidDto) {
+    try {
+      const existingMaid = await this.maidWorkRepository.findOne({ where: { id_worktime: idWorktime } });
+      console.log(existingMaid);
+
+      if (!existingMaid) {
+        throw new Error('ไม่พบตารางการทำงาน');
+      }
+      existingMaid.id_timeworktype = maidDetails.id_timeworktype;
+
+      const updatedMaid = await this.maidWorkRepository.save(existingMaid);
+      return updatedMaid;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+
   async deleteMaid(id_worktime: number): Promise<string> {
     try {
       const deleteResult = await this.maidWorkRepository.delete(id_worktime);

@@ -13,22 +13,31 @@ export class BooksController {
   }
 
   @Get("/get-book-resident/:idbook")
-async getBooksresident(@Param('idbook') booking_id: number) {
-  const booking = await this.bookService.findBookByResident(booking_id);
-  if (!booking) {
-    throw new NotFoundException('Booking not found');
+  async getBooksresident(@Param('idbook') booking_id: number) {
+    const booking = await this.bookService.findBookByResident(booking_id);
+    if (!booking) {
+      throw new NotFoundException('Booking not found');
+    }
+    return booking;
   }
-  return booking;
-}
 
-@Get("/get-book-maid/:idmaid")
-async getBooksMaid(@Param('idmaid') maid_id: number) {
-  const booking = await this.bookService.findBookByMaid(maid_id);
-  if (!booking) {
-    throw new NotFoundException('Booking not found');
+  @Get("/get-book-residentnew/:idbook")
+  async getBooksresidentNew(@Param('idbook') booking_id: number) {
+    const booking = await this.bookService.findBookByResidentNew(booking_id);
+    if (!booking) {
+      throw new NotFoundException('Booking not found');
+    }
+    return booking;
   }
-  return booking;
-}
+
+  @Get("/get-book-maid/:idmaid")
+  async getBooksMaid(@Param('idmaid') maid_id: number) {
+    const booking = await this.bookService.findBookByMaid(maid_id);
+    if (!booking) {
+      throw new NotFoundException('Booking not found');
+    }
+    return booking;
+  }
 
   @Post('/save')
   async createBook(@Body() createBookDto: CreateBookDto) {
