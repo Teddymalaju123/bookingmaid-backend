@@ -30,10 +30,11 @@ export class MaidworkDao {
     async findMaidWorkById(id_user: number): Promise<ResUserDto> {
         try {
             const query = `
-            SELECT maidwork.*, worktime_type.*,status_type.*
+            SELECT maidwork.*, worktime_type.*,status_type.*,user.*
             FROM maidwork
                         INNER JOIN worktime_type ON worktime_type.id_worktimetype = maidwork.id_timeworktype
                         INNER JOIN status_type ON status_type.id_status = maidwork.statuswork
+                        INNER JOIN user ON user.id_user = maidwork.id_user
                         WHERE maidwork.id_user = ? and maidwork.statuswork = 5;
             `;
 
