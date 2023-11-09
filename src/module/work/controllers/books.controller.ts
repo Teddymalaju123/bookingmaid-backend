@@ -42,13 +42,23 @@ export class BooksController {
     return booking;
   }
 
-  @Get("/get-book-maid/:idmaid")
-  async getBooksMaid(@Param('idmaid') maid_id: number) {
-    const booking = await this.bookService.findBookByMaid(maid_id);
+  @Post("/get-book-maid")
+  async getBooksMaid(@Body() createbookDto: CreateBookDto) {
+    const booking = await this.bookService.findBookByMaid(createbookDto);
     if (!booking) {
       throw new NotFoundException('Booking not found');
     }
     return booking;
+  }
+
+  @Post("/get-bookmaid-info")
+  async getBooksMaidinfo(@Body() createbookDto: CreateBookDto) {
+    try {
+    const booking = await this.bookService.findBookMaidinfo(createbookDto);
+    return booking;
+  } catch (error) {
+    throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+  }
   }
 
   @Post('/save')

@@ -35,8 +35,13 @@ export class BooksService {
     return resBook;
   }
 
-  async findBookByMaid(maid_id: number): Promise<Booking | null> {
-    const resBook: ReBookDto = await this.bookDao.findBookByMaid(maid_id);
+  async findBookByMaid(createbookDto: CreateBookDto){
+    const resBook: ReBookDto = await this.bookDao.findBookByMaid(createbookDto);
+    return resBook;
+  }
+
+  async findBookMaidinfo(createbookDto: CreateBookDto){
+    const resBook: ReBookDto = await this.bookDao.getBooksMaidinfo(createbookDto);
     return resBook;
   }
 
