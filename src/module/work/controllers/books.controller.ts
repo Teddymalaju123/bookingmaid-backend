@@ -12,15 +12,27 @@ export class BooksController {
     return this.bookService.findBook();
   }
 
-  @Get("/get-book-resident/:idbook")
-  async getBooksresident(@Param('idbook') booking_id: number) {
-    const booking = await this.bookService.findBookByResident(booking_id);
-    if (!booking) {
-      throw new NotFoundException('Booking not found');
-    }
+  @Post("/get-book-resident")
+  async getBooksresident(@Body() createbookDto: CreateBookDto) {
+    try {
+    const booking = await this.bookService.findBookByResident(createbookDto);
     return booking;
+  } catch (error) {
+    throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+  }
   }
 
+  @Post("/get-book-info")
+  async getBooksinfo(@Body() createbookDto: CreateBookDto) {
+    try {
+    const booking = await this.bookService.findBookinfo(createbookDto);
+    return booking;
+  } catch (error) {
+    throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+  }
+  }
+
+ 
   @Get("/get-book-residentnew/:idbook")
   async getBooksresidentNew(@Param('idbook') booking_id: number) {
     const booking = await this.bookService.findBookByResidentNew(booking_id);

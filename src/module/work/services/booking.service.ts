@@ -19,8 +19,14 @@ export class BooksService {
   }
 
 
-  async findBookByResident(booking_id: number): Promise<Booking | null> {
-    const resBook: ReBookDto = await this.bookDao.findBookByResident(booking_id);
+  async findBookByResident(createbookDto: CreateBookDto){
+    const resBook: ReBookDto = await this.bookDao.findBookByResident(createbookDto);
+    return resBook;
+  }
+
+  
+  async findBookinfo(createbookDto: CreateBookDto){
+    const resBook: ReBookDto = await this.bookDao.getBooksinfo(createbookDto);
     return resBook;
   }
 

@@ -10,18 +10,18 @@ export class BookingDao {
         @InjectRepository(Booking)
         private readonly bookingRepository: Repository<Booking>,
     ) { }
-    async findBookByResident(booking_id: number) {
+    async findBookByResident(createbookDto: CreateBookDto) {
         try {
             const query = `
             SELECT booking.*, user.*,status_type.*
             FROM booking
             JOIN user ON booking.maidbooking = user.id_user
             Join status_type ON booking.status = status_type.id_status
-            WHERE booking.user_booking = ? and booking.status = 1`;
-            const results = await this.bookingRepository.query(query, [booking_id]);
+            WHERE booking.user_booking = ? and booking.status = ?`;
+            const results = await this.bookingRepository.query(query, [createbookDto.user_booking,createbookDto.status]);
 
             if (!results || results.length === 0) {
-                throw new NotFoundException('ไม่พบข้อมูลการจองสำหรับผู้ใช้รหัส ' + booking_id);
+                throw new NotFoundException('ไม่พบข้อมูลการจองสำหรับผู้ใช้รหัส ' + createbookDto.user_booking);
             }
 
             return results;
@@ -30,18 +30,18 @@ export class BookingDao {
         }
     }
 
-    async findBookByResidentStatuspayment(booking_id: number) {
+    async getBooksinfo(createbookDto: CreateBookDto) {
         try {
             const query = `
             SELECT booking.*, user.*,status_type.*
             FROM booking
             JOIN user ON booking.maidbooking = user.id_user
             Join status_type ON booking.status = status_type.id_status
-            WHERE booking.user_booking = ? and booking.status = 2`;
-            const results = await this.bookingRepository.query(query, [booking_id]);
+            WHERE booking.user_booking = ?  and booking.booking_id = ?`;
+            const results = await this.bookingRepository.query(query, [createbookDto.user_booking,createbookDto.booking_id]);
 
             if (!results || results.length === 0) {
-                throw new NotFoundException('ไม่พบข้อมูลการจองสำหรับผู้ใช้รหัส ' + booking_id);
+                throw new NotFoundException('ไม่พบข้อมูลการจองสำหรับผู้ใช้รหัส ' + createbookDto.user_booking);
             }
 
             return results;
@@ -49,6 +49,7 @@ export class BookingDao {
             throw new Error(`เกิดข้อผิดพลาดในการค้นหาข้อมูลการจอง: ${error.message}`);
         }
     }
+
 
     async findBookByResidentNew(booking_id: number) {
         try {
