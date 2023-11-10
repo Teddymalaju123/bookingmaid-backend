@@ -99,7 +99,7 @@ export class BookingDao {
             JOIN user ON booking.user_booking = user.id_user
             Join status_type ON booking.status = status_type.id_status
             WHERE booking.maidbooking = ?  and booking.booking_id = ?`;
-            const results = await this.bookingRepository.query(query, [createbookDto.user_booking,createbookDto.booking_id]);
+            const results = await this.bookingRepository.query(query, [createbookDto.maidbooking,createbookDto.booking_id]);
 
             if (!results || results.length === 0) {
                 throw new NotFoundException('ไม่พบข้อมูลการจองสำหรับผู้ใช้รหัส ' + createbookDto.user_booking);
