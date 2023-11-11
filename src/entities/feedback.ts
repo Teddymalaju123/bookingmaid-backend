@@ -13,5 +13,5 @@ export class Feedback {
   id_user : number;
 
   @Column()
-  id_maid : number;
+  id_booking : number;
 }
