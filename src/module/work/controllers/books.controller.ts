@@ -22,6 +22,24 @@ export class BooksController {
   }
   }
 
+  @Get("/get-book-idresident/:idbook")
+  async getBookIDsresidentNew(@Param('idbook') booking_id: number) {
+    const booking = await this.bookService.findBookByIDResident(booking_id);
+    if (!booking) {
+      throw new NotFoundException('Booking not found');
+    }
+    return booking;
+  }
+
+  @Get("/get-book-idMaid/:idbook")
+  async getBookIDMaid(@Param('idbook') booking_id: number) {
+    const booking = await this.bookService.findBookByIMaid(booking_id);
+    if (!booking) {
+      throw new NotFoundException('Booking not found');
+    }
+    return booking;
+  }
+
   @Post("/get-book-info")
   async getBooksinfo(@Body() createbookDto: CreateBookDto) {
     try {
