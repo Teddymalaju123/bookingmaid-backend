@@ -1,5 +1,5 @@
 
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserDao } from '../dao/user.dao';
@@ -19,7 +19,7 @@ export class BooksService {
   }
 
 
-  async findBookByResident(createbookDto: CreateBookDto){
+  async findBookByResident(createbookDto: CreateBookDto) {
     const resBook: ReBookDto = await this.bookDao.findBookByResident(createbookDto);
     return resBook;
   }
@@ -33,8 +33,8 @@ export class BooksService {
     const resBook: ReBookDto = await this.bookDao.findBookByIMaid(booking_id);
     return resBook;
   }
-  
-  async findBookinfo(createbookDto: CreateBookDto){
+
+  async findBookinfo(createbookDto: CreateBookDto) {
     const resBook: ReBookDto = await this.bookDao.getBooksinfo(createbookDto);
     return resBook;
   }
@@ -44,12 +44,22 @@ export class BooksService {
     return resBook;
   }
 
-  async findBookByMaid(createbookDto: CreateBookDto){
+  async findBookByMaid(createbookDto: CreateBookDto) {
     const resBook: ReBookDto = await this.bookDao.findBookByMaid(createbookDto);
     return resBook;
   }
 
-  async findBookMaidinfo(createbookDto: CreateBookDto){
+  async updateStatus(updateStatusDto: UpdateStatusDto): Promise<Booking> {
+    const booking = await this.bookRepository.findOneById(updateStatusDto.booking_id);
+    if (!booking) {
+      throw new NotFoundException('Booking not found');
+    }
+    booking.status = updateStatusDto.status;
+    const updatedBooking = await this.bookRepository.save(booking);
+    return updatedBooking;
+  }
+
+  async findBookMaidinfo(createbookDto: CreateBookDto) {
     const resBook: ReBookDto = await this.bookDao.getBooksMaidinfo(createbookDto);
     return resBook;
   }

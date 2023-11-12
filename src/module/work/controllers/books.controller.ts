@@ -15,11 +15,11 @@ export class BooksController {
   @Post("/get-book-resident")
   async getBooksresident(@Body() createbookDto: CreateBookDto) {
     try {
-    const booking = await this.bookService.findBookByResident(createbookDto);
-    return booking;
-  } catch (error) {
-    throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
-  }
+      const booking = await this.bookService.findBookByResident(createbookDto);
+      return booking;
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   @Get("/get-book-idresident/:idbook")
@@ -43,14 +43,14 @@ export class BooksController {
   @Post("/get-book-info")
   async getBooksinfo(@Body() createbookDto: CreateBookDto) {
     try {
-    const booking = await this.bookService.findBookinfo(createbookDto);
-    return booking;
-  } catch (error) {
-    throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
-  }
+      const booking = await this.bookService.findBookinfo(createbookDto);
+      return booking;
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
- 
+
   @Get("/get-book-residentnew/:idbook")
   async getBooksresidentNew(@Param('idbook') booking_id: number) {
     const booking = await this.bookService.findBookByResidentNew(booking_id);
@@ -69,14 +69,31 @@ export class BooksController {
     return booking;
   }
 
+
+  @Post('/update-status')
+  async updateStatus(
+    @Body() updateStatusDto: UpdateStatusDto,
+  ) {
+    try {
+      const updatedBooking = await this.bookService.updateStatus(updateStatusDto);
+      return updatedBooking;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw new NotFoundException(`Booking not found with ID: ${updateStatusDto.booking_id}`);
+      } else {
+        throw new Error(`Error updating booking status: ${error.message}`);
+      }
+    }
+  }
+
   @Post("/get-bookmaid-info")
   async getBooksMaidinfo(@Body() createbookDto: CreateBookDto) {
     try {
-    const booking = await this.bookService.findBookMaidinfo(createbookDto);
-    return booking;
-  } catch (error) {
-    throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
-  }
+      const booking = await this.bookService.findBookMaidinfo(createbookDto);
+      return booking;
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   @Post('/save')
