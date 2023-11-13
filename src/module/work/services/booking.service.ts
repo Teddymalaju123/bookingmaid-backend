@@ -59,6 +59,17 @@ export class BooksService {
     return updatedBooking;
   }
 
+  async updateSlip(updateSlipDto: UpdateSlipDto): Promise<Booking> {
+    const booking = await this.bookRepository.findOneById(updateSlipDto.booking_id);
+    if (!booking) {
+      throw new NotFoundException('Booking not found');
+    }
+    booking.paymentslip = updateSlipDto.paymentslip;
+    booking.status = updateSlipDto.status;
+    const updatedBooking = await this.bookRepository.save(booking);
+    return updatedBooking;
+  }
+
   async findBookMaidinfo(createbookDto: CreateBookDto) {
     const resBook: ReBookDto = await this.bookDao.getBooksMaidinfo(createbookDto);
     return resBook;

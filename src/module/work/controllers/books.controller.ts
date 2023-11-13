@@ -86,6 +86,22 @@ export class BooksController {
     }
   }
 
+  @Post('/update-slip')
+  async updateSlip(
+    @Body() updateSlipDto: UpdateSlipDto,
+  ) {
+    try {
+      const updatedBooking = await this.bookService.updateSlip(updateSlipDto);
+      return updatedBooking;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw new NotFoundException(`Booking not found with ID: ${updateSlipDto.booking_id}`);
+      } else {
+        throw new Error(`Error updating booking status: ${error.message}`);
+      }
+    }
+  }
+
   @Post("/get-bookmaid-info")
   async getBooksMaidinfo(@Body() createbookDto: CreateBookDto) {
     try {
