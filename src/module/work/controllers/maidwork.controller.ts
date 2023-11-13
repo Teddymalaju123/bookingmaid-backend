@@ -1,4 +1,4 @@
-import { Controller, Post, Delete, Body, Param, HttpException, HttpStatus, Get, InternalServerErrorException } from '@nestjs/common';
+import { Controller, Post, Delete, Body, Param, HttpException, HttpStatus, Get, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { MaidWorkService } from '../services/maidworks.service';
 
 
@@ -58,6 +58,22 @@ export class MaidWorkController {
         error,
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
+    }
+  }
+
+  @Post('/update-work')
+  async updateWork(
+    @Body() updateWorkDto: UpdateWorkDto,
+  ) {
+    try {
+      const updatedWorking = await this.maidService.updateWorktime(updateWorkDto);
+      return updatedWorking;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw new NotFoundException(`Booking not found with ID: ${updateWorkDto.id_worktime}`);
+      } else {
+        throw new Error(`Error updating booking status: ${error.message}`);
+      }
     }
   }
 

@@ -64,6 +64,16 @@ export class MaidWorkService {
     }
   }
 
+  async updateWorktime(updateWorkDto: UpdateWorkDto): Promise<Maidwork> {
+    const working = await this.maidWorkRepository.findOneById(updateWorkDto.id_worktime);
+    if (!working) {
+      throw new NotFoundException('Booking not found');
+    }
+    working.id_timeworktype = updateWorkDto.id_timeworktype;
+    const updatedWorking = await this.maidWorkRepository.save(working);
+    return updatedWorking;
+  }
+
   async editMaidWorkTime(idWorktime: number, maidDetails: CreateMaidDto) {
     try {
       const existingMaid = await this.maidWorkRepository.findOne({ where: { id_worktime: idWorktime } });
