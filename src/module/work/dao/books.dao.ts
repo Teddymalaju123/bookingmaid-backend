@@ -98,7 +98,7 @@ export class BookingDao {
             FROM booking
             JOIN user ON booking.maidbooking = user.id_user
             Join status_type ON booking.status = status_type.id_status
-            WHERE booking.user_booking = ? AND booking.booking_date = (SELECT MAX(booking_date) FROM booking);`;
+            WHERE booking.user_booking = ?  AND booking.status = 1 AND booking.booking_date = (SELECT MAX(booking_date) FROM booking);`;
             const results = await this.bookingRepository.query(query, [booking_id]);
 
             if (!results || results.length === 0) {
