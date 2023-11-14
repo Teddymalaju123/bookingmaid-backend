@@ -24,7 +24,7 @@ export class Booking {
   @Column({ type: 'longblob' }) 
   paymentslip: Buffer;
 
-  @Column()
+  @Column({ type: 'decimal' })
   maid_rating: number;
 
   @Column()
