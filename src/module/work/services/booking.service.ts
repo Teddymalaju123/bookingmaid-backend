@@ -70,6 +70,16 @@ export class BooksService {
     return updatedBooking;
   }
 
+  async updateReview(updateReviewDto: UpdateReviewDto): Promise<Booking> {
+    const booking = await this.bookRepository.findOneById(updateReviewDto.booking_id);
+    if (!booking) {
+      throw new NotFoundException('Booking not found');
+    }
+    booking.maid_rating = updateReviewDto.maid_rating;
+    const updatedBooking = await this.bookRepository.save(booking);
+    return updatedBooking;
+  }
+
   async findBookMaidinfo(createbookDto: CreateBookDto) {
     const resBook: ReBookDto = await this.bookDao.getBooksMaidinfo(createbookDto);
     return resBook;

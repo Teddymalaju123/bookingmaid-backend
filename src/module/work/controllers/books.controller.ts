@@ -102,6 +102,22 @@ export class BooksController {
     }
   }
 
+  @Post('/update-Review')
+  async updateReview(
+    @Body() updateReviewDto: UpdateReviewDto,
+  ) {
+    try {
+      const updatedBooking = await this.bookService.updateReview(updateReviewDto);
+      return updatedBooking;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw new NotFoundException(`Booking not found with ID: ${updateReviewDto.booking_id}`);
+      } else {
+        throw new Error(`Error updating booking status: ${error.message}`);
+      }
+    }
+  }
+
   @Post("/get-bookmaid-info")
   async getBooksMaidinfo(@Body() createbookDto: CreateBookDto) {
     try {
