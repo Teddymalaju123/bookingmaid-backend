@@ -5,6 +5,8 @@ import { Repository } from 'typeorm';
 import { UserDao } from '../dao/user.dao';
 import { Booking } from 'src/entities/booking';
 import { BookingDao } from '../dao/books.dao';
+import { User } from 'src/entities/User';
+import { log } from 'console';
 
 
 @Injectable()
@@ -12,6 +14,7 @@ export class BooksService {
   constructor(
     private readonly bookDao: BookingDao,
     @InjectRepository(Booking) private bookRepository: Repository<Booking>,
+    @InjectRepository(User) private userRepository: Repository<User>,
   ) { }
 
   findBook() {
@@ -49,6 +52,21 @@ export class BooksService {
     return resBook;
   }
 
+  async findRating(updateReviewDto: UpdateReviewDto) {
+    try {
+      const updatedBooking = await this.bookDao.findRating(updateReviewDto);
+      return updatedBooking;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw new NotFoundException(`Booking not found with ID: ${updateReviewDto}`);
+      } else {
+        throw new Error(`Error updating booking status: ${error.message}`);
+      }
+    }
+  }
+  
+
+
   async updateStatus(updateStatusDto: UpdateStatusDto): Promise<Booking> {
     const booking = await this.bookRepository.findOneById(updateStatusDto.booking_id);
     if (!booking) {
@@ -70,13 +88,18 @@ export class BooksService {
     return updatedBooking;
   }
 
-  async updateReview(updateReviewDto: UpdateReviewDto): Promise<Booking> {
+  async updateReview(updateReviewDto: UpdateReviewDto) {
     const booking = await this.bookRepository.findOneById(updateReviewDto.booking_id);
     if (!booking) {
       throw new NotFoundException('Booking not found');
     }
     booking.maid_rating = updateReviewDto.maid_rating;
     const updatedBooking = await this.bookRepository.save(booking);
+    const rating = await this.bookDao.findRating(updateReviewDto);
+    console.log(rating[0].maid_rating)
+    const updatedAvgRate = await this.userRepository.findOneById(updateReviewDto.id_user);
+    updatedAvgRate.maid_sumrating = rating[0].maid_rating;
+    const updatedsumRate = await this.userRepository.save(updatedAvgRate);
     return updatedBooking;
   }
 

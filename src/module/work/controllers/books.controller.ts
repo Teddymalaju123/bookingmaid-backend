@@ -69,6 +69,31 @@ export class BooksController {
     return booking;
   }
 
+  @Post('/find-rating')
+  async findRating(
+    @Body() updateReviewDto: UpdateReviewDto
+  ) {
+    try {
+      const resBook: ReBookDto = await this.bookService.findRating(updateReviewDto);
+      return resBook;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw new NotFoundException(`Booking not found with ID: ${updateReviewDto.booking_id}`);
+      } else {
+        throw new Error(`Error updating booking status: ${error.message}`);
+      }
+    }
+  }
+
+  // @Post("/get-rating")
+  // async getRating(@Body() createbookDto: CreateBookDto) {
+  //   const booking = await this.bookService.findRating(createbookDto);
+  //   if (!booking) {
+  //     throw new NotFoundException('Booking not found');
+  //   }
+  //   return booking;
+  // }
+
 
   @Post('/update-status')
   async updateStatus(

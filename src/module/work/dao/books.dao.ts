@@ -133,6 +133,24 @@ export class BookingDao {
         }
     }
 
+    async findRating(updateReviewDto: UpdateReviewDto) {
+        try {
+          const query = `
+            SELECT AVG(booking.maid_rating) AS maid_rating
+            FROM booking
+            WHERE booking.maidbooking = ? and booking.maid_rating IS NOT NULL;`;
+          const results = await this.bookingRepository.query(query, [updateReviewDto.maidbooking]);
+      
+          if (!results || results.length === 0) {
+            throw new NotFoundException('ไม่พบข้อมูลการจองสำหรับผู้ใช้รหัส ' + updateReviewDto.maidbooking);
+          }
+      
+          return results;
+        } catch (error) {
+          throw new Error(`เกิดข้อผิดพลาดในการค้นหาข้อมูลการจอง: ${error.message}`);
+        }
+      }
+
     async getBooksMaidinfo(createbookDto: CreateBookDto) {
         try {
             const query = `

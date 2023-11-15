@@ -13,6 +13,6 @@ interface CreateUserDto {
   id_card: number;
   birthday: Date;
   address: string;
-  maid_rating: number;
+  maid_sumrating: number;
   id_type: number;
 }

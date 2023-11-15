@@ -28,4 +28,5 @@ interface ReBookDto {
   id_status: number
   status_name: string
   status_description: string
+  sumRating: number
 }

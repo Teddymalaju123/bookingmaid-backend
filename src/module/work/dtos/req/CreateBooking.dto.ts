@@ -10,4 +10,5 @@ interface CreateBookDto {
   status: number;
   user_booking: number;
   maidbooking: number;
+  sumRating: number;
 }

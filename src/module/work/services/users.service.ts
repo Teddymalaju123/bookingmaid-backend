@@ -77,6 +77,22 @@ export class UsersService {
     }
   }
 
+  async editRating(idUser: number, userDetails: CreateUserDto) {
+    try {
+      const existingUser = await this.userRepository.findOneById(idUser);
+      console.log(existingUser);
+
+      if (!existingUser) {
+        throw new Error('User not found');
+      }
+      existingUser.maid_sumrating = userDetails.maid_sumrating;
+      const updatedUser = await this.userRepository.save(existingUser);
+      return updatedUser;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+
   async deleteUser(userId: number) {
     try {
       const userToDelete = await this.userRepository.findOneById(userId);

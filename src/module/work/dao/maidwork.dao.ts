@@ -35,8 +35,8 @@ export class MaidworkDao {
             INNER JOIN worktime_type ON worktime_type.id_worktimetype = maidwork.id_timeworktype
             INNER JOIN status_type ON status_type.id_status = maidwork.statuswork
             INNER JOIN user ON user.id_user = maidwork.id_user
-            WHERE maidwork.id_user = ? AND maidwork.statuswork = 5
-            AND maidwork.day >= CURDATE();
+            WHERE maidwork.id_user = ? AND maidwork.id_timeworktype != 8 AND maidwork.statuswork = 5
+            AND maidwork.day >= CURDATE();;
             `;
 
             const results = await this.maidworkRepository.query(query, [id_user]);

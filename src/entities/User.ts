@@ -34,8 +34,8 @@ export class User {
   @Column()
   roomsize: string;
 
-  @Column()
-  maid_rating: number;
+  @Column({ type: 'decimal' })
+  maid_sumrating: number;
 
   @Column()
   id_card: number;
