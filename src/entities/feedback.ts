@@ -14,4 +14,8 @@ export class Feedback {
 
   @Column()
   id_booking : number;
+
+  @Column()
+  status_feedback : number;
+
 }
