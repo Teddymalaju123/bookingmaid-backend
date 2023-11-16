@@ -51,9 +51,9 @@ export class BooksController {
   }
 
 
-  @Get("/get-book-residentnew/:idbook")
-  async getBooksresidentNew(@Param('idbook') booking_id: number) {
-    const booking = await this.bookService.findBookByResidentNew(booking_id);
+  @Post("/get-book-residentnew")
+  async getBooksresidentNew(@Body() createbookDto: CreateBookDto) {
+    const booking = await this.bookService.findBookByResidentNew(createbookDto);
     if (!booking) {
       throw new NotFoundException('Booking not found');
     }
