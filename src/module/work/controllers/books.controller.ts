@@ -85,16 +85,7 @@ export class BooksController {
     }
   }
 
-  // @Post("/get-rating")
-  // async getRating(@Body() createbookDto: CreateBookDto) {
-  //   const booking = await this.bookService.findRating(createbookDto);
-  //   if (!booking) {
-  //     throw new NotFoundException('Booking not found');
-  //   }
-  //   return booking;
-  // }
-
-
+ 
   @Post('/update-status')
   async updateStatus(
     @Body() updateStatusDto: UpdateStatusDto,

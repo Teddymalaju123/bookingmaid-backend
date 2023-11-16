@@ -25,6 +25,22 @@ export class FeedBackController {
     }
   }
 
+  @Post('/update-status')
+  async updateStatus(
+    @Body() createFeedDto: CreateFeedDto,
+  ) {
+    try {
+      const updatedBooking = await this.feedbackService.updateStatus(createFeedDto);
+      return updatedBooking;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(`Booking not found with ID: ${createFeedDto.feedback_id}`);
+      } else {
+        throw new Error(`Error updating booking status: ${error.message}`);
+      }
+    }
+  }
+
   @Delete('/deletefeed/:id')
   async deleteFeed(@Param('id') feedId: string) {
     try {

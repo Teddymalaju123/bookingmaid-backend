@@ -27,6 +27,16 @@ export class FeedbackService {
     return this.feedBackRepository.find();
   }
 
+  async updateStatus(createFeedDto: CreateFeedDto) {
+    const feedback = await this.feedBackRepository.findOneById(createFeedDto.feedback_id);
+    if (!feedback) {
+      throw new Error('Booking not found');
+    }
+    feedback.status_feedback = createFeedDto.status_feedback;
+    const updatedBooking = await this.feedBackRepository.save(feedback);
+    return updatedBooking;
+  }
+
   async createFeed(feedDetails: CreateFeedDto) {
     try {
       const newFeed = this.feedBackRepository.create({

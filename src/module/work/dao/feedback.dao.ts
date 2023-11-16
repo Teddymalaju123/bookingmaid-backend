@@ -12,7 +12,10 @@ export class FeedbackDao {
     ) { }
     async findFeedback() {
         try {
-            const query = ` SELECT * FROM feedback join user on feedback.id_user = user.id_user WHERE user.id_user `;
+            const query = ` SELECT * FROM feedback 
+            join user on feedback.id_user = user.id_user 
+            join status_type on feedback.status_feedback = status_type.id_status
+            WHERE user.id_user `;
             const results = await this.feedbackRepository.query(query);
             if (!results || results.length === 0) {
                 throw new NotFoundException('Failed');
