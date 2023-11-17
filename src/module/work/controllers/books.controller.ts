@@ -12,6 +12,15 @@ export class BooksController {
     return this.bookService.findBook();
   }
 
+  @Get("/get-book-idbook/:idbook")
+  async getBookIDBook(@Param('idbook') booking_id: number) {
+    const booking = await this.bookService.findBookByIDBook(booking_id);
+    if (!booking) {
+      throw new NotFoundException('Booking not found');
+    }
+    return booking;
+  }
+
   @Post("/get-book-resident")
   async getBooksresident(@Body() createbookDto: CreateBookDto) {
     try {
@@ -30,6 +39,8 @@ export class BooksController {
     }
     return booking;
   }
+
+
 
   @Get("/get-book-idMaid/:idbook")
   async getBookIDMaid(@Param('idbook') booking_id: number) {
