@@ -134,8 +134,6 @@ export class BookingDao {
         }
     }
 
-
-
     async findBookByMaid(createbookDto: CreateBookDto) {
         try {
             const query = `
@@ -143,9 +141,7 @@ export class BookingDao {
             FROM booking
             JOIN user ON booking.maidbooking = user.id_user
             JOIN status_type ON booking.status = status_type.id_status
-            WHERE booking.maidbooking = ? AND booking.status = 1
-            ORDER BY booking.booking_id DESC
-            LIMIT 1;`;
+            WHERE booking.maidbooking = ? AND booking.status = ?;`;
             const results = await this.bookingRepository.query(query, [createbookDto.maidbooking, createbookDto.status]);
 
             if (!results || results.length === 0) {
