@@ -69,6 +69,7 @@ export class UsersService {
       existingUser.phone = userDetails.phone;
       existingUser.birthday = userDetails.birthday;
       existingUser.address = userDetails.address;
+      existingUser.profile = userDetails.profile;
 
       const updatedUser = await this.userRepository.save(existingUser);
       return updatedUser;
