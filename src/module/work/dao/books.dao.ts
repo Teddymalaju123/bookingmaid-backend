@@ -139,7 +139,7 @@ export class BookingDao {
             const query = `
             SELECT booking.*, user.*, status_type.*
             FROM booking
-            JOIN user ON booking.maidbooking = user.id_user
+            JOIN user ON booking.user_booking = user.id_user
             JOIN status_type ON booking.status = status_type.id_status
             WHERE booking.maidbooking = ? AND booking.status = ?;`;
             const results = await this.bookingRepository.query(query, [createbookDto.maidbooking, createbookDto.status]);
