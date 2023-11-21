@@ -1,12 +1,11 @@
 
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { UserDao } from '../dao/user.dao';
+import { EntityNotFoundError, Repository } from 'typeorm';
 import { Booking } from 'src/entities/booking';
 import { BookingDao } from '../dao/books.dao';
 import { User } from 'src/entities/User';
-import { log } from 'console';
+
 
 
 @Injectable()
@@ -69,8 +68,6 @@ export class BooksService {
     }
   }
   
-
-
   async updateStatus(updateStatusDto: UpdateStatusDto): Promise<Booking> {
     const booking = await this.bookRepository.findOneById(updateStatusDto.booking_id);
     if (!booking) {
@@ -93,19 +90,25 @@ export class BooksService {
   }
 
   async updateReview(updateReviewDto: UpdateReviewDto) {
-    const booking = await this.bookRepository.findOneById(updateReviewDto.booking_id);
-    if (!booking) {
-      throw new NotFoundException('Booking not found');
+    try {
+        const booking = await this.bookRepository.findOneById(updateReviewDto.booking_id);
+        booking.maid_rating = updateReviewDto.maid_rating;
+        const updatedBooking = await this.bookRepository.save(booking);
+        const rating = await this.bookDao.findRating(updateReviewDto);
+        console.log(rating[0].maid_rating);
+        const user = await this.userRepository.findOneById(updateReviewDto.maidbooking);
+        user.maid_sumrating = rating[0].maid_rating;
+        const updatedUser = await this.userRepository.save(user);
+        return updatedBooking;
+    } catch (error) {
+        if (error instanceof EntityNotFoundError) {
+            throw new Error(`Booking not found with ID: ${updateReviewDto.booking_id}`);
+        } else {
+            throw new Error(`Error updating booking status: ${error.message}`);
+        }
     }
-    booking.maid_rating = updateReviewDto.maid_rating;
-    const updatedBooking = await this.bookRepository.save(booking);
-    const rating = await this.bookDao.findRating(updateReviewDto);
-    console.log(rating[0].maid_rating)
-    const updatedAvgRate = await this.userRepository.findOneById(updateReviewDto.id_user);
-    updatedAvgRate.maid_sumrating = rating[0].maid_rating;
-    const updatedsumRate = await this.userRepository.save(updatedAvgRate);
-    return updatedBooking;
-  }
+}
+
 
   async findBookMaidinfo(createbookDto: CreateBookDto) {
     const resBook: ReBookDto = await this.bookDao.getBooksMaidinfo(createbookDto);
