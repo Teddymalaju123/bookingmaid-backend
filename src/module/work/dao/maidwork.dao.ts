@@ -51,6 +51,51 @@ export class MaidworkDao {
         }
     }
 
+    async findMaidWorkByIdForweb(id_user: number): Promise<ResUserDto> {
+        try {
+            const query = `
+            SELECT maidwork.*, worktime_type.*,status_type.*,user.*
+            FROM maidwork
+            INNER JOIN worktime_type ON worktime_type.id_worktimetype = maidwork.id_timeworktype
+            INNER JOIN status_type ON status_type.id_status = maidwork.statuswork
+            INNER JOIN user ON user.id_user = maidwork.id_user
+            WHERE maidwork.id_user = ?
+            ORDER BY maidwork.day DESC;
+            `;
+
+            const results = await this.maidworkRepository.query(query, [id_user]);
+
+            if (!results || results.length === 0) {
+                throw new NotFoundException('No user with this id_user found.');
+            }
+
+            return results;
+        } catch (error) {
+            throw new Error(`Failed to fetch user with id_user ${id_user}: ${error.message}`);
+        }
+    }
+
+    async findMaidWorkByIdWork(id_worktime: number): Promise<ResUserDto> {
+        try {
+            const query = `
+            SELECT * FROM maidwork 
+            INNER JOIN user on maidwork.id_user = user.id_user 
+            INNER JOIN worktime_type on worktime_type.id_worktimetype = maidwork.id_timeworktype
+            INNER JOIN status_type on status_type.id_status = maidwork.statuswork
+            WHERE maidwork.id_worktime = ?;;
+            `;
+
+            const results = await this.maidworkRepository.query(query, [id_worktime]);
+
+            if (!results || results.length === 0) {
+                throw new NotFoundException('No user with this id_user found.');
+            }
+
+            return results;
+        } catch (error) {
+            throw new Error(`Failed to fetch user with id_user ${id_worktime}: ${error.message}`);
+        }
+    }
 
 
 

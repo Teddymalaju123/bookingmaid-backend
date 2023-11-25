@@ -18,6 +18,16 @@ export class MaidWorkController {
     return this.maidService.findWork(id_user);
   }
 
+  @Get("/getworkforweb/:id_user")
+  getWorkByID(@Param('id_user') id_user: number) {
+    return this.maidService.findWorkByID(id_user);
+  }
+
+  @Get("/getworkbyidwork/:id_worktime")
+  getWorkIdWork(@Param('id_worktime') id_worktime: number) {
+    return this.maidService.findWorkByIdwork(id_worktime);
+  }
+
   @Post('/savework')
   async createMaidwork(@Body() createMaidDto: CreateMaidDto) {
     try {

@@ -34,6 +34,17 @@ export class MaidWorkService {
     return resUsers;
   }
 
+  
+  async findWorkByID(id_user: number): Promise<Maidwork | null> {
+    const resUsers: ResUserDto = await this.maiddao.findMaidWorkByIdForweb(id_user);
+    return resUsers;
+  }
+
+  async findWorkByIdwork(id_worktime: number): Promise<Maidwork | null> {
+    const resUsers: ResUserDto = await this.maiddao.findMaidWorkByIdWork(id_worktime);
+    return resUsers;
+  }
+
   async createMaidwork(maidDetails: CreateMaidDto) {
     try {
       const newMaid = this.maidWorkRepository.create({
