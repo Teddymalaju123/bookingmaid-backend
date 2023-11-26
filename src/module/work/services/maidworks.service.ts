@@ -1,10 +1,11 @@
 
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindManyOptions, Repository } from 'typeorm';
 import { UserDao } from '../dao/user.dao';
 import { Maidwork } from 'src/entities/maidwork';
 import { MaidworkDao } from '../dao/maidwork.dao';
+import { format, utcToZonedTime } from 'date-fns-tz';
 
 
 @Injectable()
@@ -40,21 +41,51 @@ export class MaidWorkService {
     return resUsers;
   }
 
-  async findWorkByIdwork(id_worktime: number): Promise<Maidwork | null> {
-    const resUsers: ResUserDto = await this.maiddao.findMaidWorkByIdWork(id_worktime);
+  async findWorkByIdwork(id_user: number): Promise<Maidwork | null> {
+    const resUsers: ResUserDto = await this.maiddao.findMaidWorkByIdWork(id_user);
     return resUsers;
   }
 
-  async createMaidwork(maidDetails: CreateMaidDto) {
+  async findDuplicateCreate(maidDetails: CreateMaidDto) {
     try {
-      const newMaid = this.maidWorkRepository.create({
-        ...maidDetails,
+      const existingWork = await this.maiddao.findDuplicateCreate(maidDetails);
+  
+      const updatedExistingWork = existingWork.map((item, index) => {
+        const utcDate = new Date(item.day);
+        const timeZone = 'Asia/Bangkok';
+  
+        const zonedDate = utcToZonedTime(utcDate, timeZone);
+        const formattedDate = format(zonedDate, 'yyyy-MM-dd HH:mm:ssXXX', { timeZone });
+  
+        return { ...item, day: formattedDate };
       });
-      return await this.maidWorkRepository.save(newMaid);
+  
+      return updatedExistingWork;
     } catch (error) {
       throw new Error(error);
     }
   }
+
+  async createMaidwork(maidDetails: CreateMaidDto) {
+    try {
+      const existingWork = await this.findDuplicateCreate(maidDetails);
+      console.log(existingWork);
+      console.log(maidDetails);
+      if(existingWork.length > 0){
+        throw new HttpException('ไม่สามารถสร้างงาน', 400);
+      }
+  
+      const newMaid = this.maidWorkRepository.create({
+        ...maidDetails,
+      });
+  
+      return await this.maidWorkRepository.save(newMaid);
+    } catch (error) {
+      console.log(error);
+      throw new Error(error);
+    }
+  }
+  
 
   async editMaid(idWorktime: number, maidDetails: CreateMaidDto) {
     try {

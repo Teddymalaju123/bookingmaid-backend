@@ -75,6 +75,29 @@ export class MaidworkDao {
         }
     }
 
+    async findDuplicateCreate(createMaidDto: CreateMaidDto){
+        try {
+            const query = `
+            SELECT maidwork.*, worktime_type.*,status_type.*,user.*
+            FROM maidwork
+            INNER JOIN worktime_type ON worktime_type.id_worktimetype = maidwork.id_timeworktype
+            INNER JOIN status_type ON status_type.id_status = maidwork.statuswork
+            INNER JOIN user ON user.id_user = maidwork.id_user
+            WHERE maidwork.id_user = ? AND maidwork.day = ?
+            `;
+
+            const results = await this.maidworkRepository.query(query, [createMaidDto.id_user, createMaidDto.day]);
+            if (!results || results.length === 0) {
+                throw new NotFoundException('No user with this id_user found.');
+            }
+
+            return results;
+        } catch (error) {
+            return [];
+            throw new Error(`Failed to fetch user with id_user ${createMaidDto.id_user}: ${error.message}`);
+        }
+    }
+
     async findMaidWorkByIdWork(id_worktime: number): Promise<ResUserDto> {
         try {
             const query = `

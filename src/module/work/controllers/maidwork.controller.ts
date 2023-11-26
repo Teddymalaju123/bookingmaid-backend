@@ -28,6 +28,20 @@ export class MaidWorkController {
     return this.maidService.findWorkByIdwork(id_worktime);
   }
 
+  @Post('/getworkduplicate')
+  async getworkDuplicate(@Body() createMaidDto: CreateMaidDto) {
+    try {
+      console.log(new Date().toString())
+      const newMaid = await this.maidService.findDuplicateCreate(createMaidDto);
+      return newMaid;
+    } catch (error) {
+      throw new HttpException(
+        'การสร้างตารางงานล้มเหลว.',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
   @Post('/savework')
   async createMaidwork(@Body() createMaidDto: CreateMaidDto) {
     try {

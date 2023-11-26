@@ -35,4 +35,7 @@ export class Booking {
 
   @Column()
   maidbooking: number;
+
+  @Column()
+  id_maidwork: number;
 }

@@ -9,7 +9,7 @@ export class Maidwork {
   @Column()
   statuswork: number;
 
-  @Column()
+  @Column({type: 'date'})
   day : Date;
 
   @Column()

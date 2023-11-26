@@ -9,6 +9,9 @@ export class Feedback {
   @Column()
   feedback_description: string;
 
+  @Column({ type: 'longblob' }) 
+  picture_report: Buffer;
+
   @Column()
   id_user : number;
 
