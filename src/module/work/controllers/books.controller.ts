@@ -155,6 +155,22 @@ export class BooksController {
     }
   }
 
+  @Post('/edit-book')
+  async editBook(
+    @Body() createBookDto: CreateBookDto,
+  ) {
+    try {
+      const updatedBooking = await this.bookService.editBook(createBookDto);
+      return updatedBooking;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw new NotFoundException(`Booking not found with ID: ${createBookDto.booking_id}`);
+      } else {
+        throw new Error(`Error updating booking status: ${error.message}`);
+      }
+    }
+  }
+
   @Post('/save')
   async createBook(@Body() createBookDto: CreateBookDto) {
     try {

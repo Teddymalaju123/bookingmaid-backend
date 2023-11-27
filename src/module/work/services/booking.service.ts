@@ -109,6 +109,20 @@ export class BooksService {
     }
 }
 
+async editBook(createBookDto: CreateBookDto): Promise<Booking> {
+  const booking = await this.bookRepository.findOneById(createBookDto.booking_id);
+  if (!booking) {
+    throw new NotFoundException('Booking not found');
+  }
+  booking.booking_date = createBookDto.booking_date;
+  booking.work_hour = createBookDto.work_hour;
+  booking.start_work = createBookDto.start_work;
+  booking.service_price = createBookDto.service_price;
+  booking.descriptmaid = createBookDto.descriptmaid;
+  const updatedBooking = await this.bookRepository.save(booking);
+  return updatedBooking;
+}
+
 
   async findBookMaidinfo(createbookDto: CreateBookDto) {
     const resBook: ReBookDto = await this.bookDao.getBooksMaidinfo(createbookDto);

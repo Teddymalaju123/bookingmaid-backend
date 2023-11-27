@@ -8,6 +8,7 @@ interface CreateBookDto {
   paymentslip: Buffer;
   maid_rating: number;
   status: number;
+  descriptmaid: string;
   user_booking: number;
   maidbooking: number;
   id_maidwork: number;
