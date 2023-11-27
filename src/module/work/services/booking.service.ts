@@ -5,6 +5,7 @@ import { EntityNotFoundError, Repository } from 'typeorm';
 import { Booking } from 'src/entities/booking';
 import { BookingDao } from '../dao/books.dao';
 import { User } from 'src/entities/User';
+import { format, utcToZonedTime } from 'date-fns-tz';
 
 
 
@@ -22,37 +23,98 @@ export class BooksService {
 
   async findBookByIDBook(booking_id: number): Promise<Booking | null> {
     const resBook: ReBookDto = await this.bookDao.findBookByIDBook(booking_id);
+    
     return resBook;
   }
 
   async findBookByResident(createbookDto: CreateBookDto) {
     const resBook: ReBookDto = await this.bookDao.findBookByResident(createbookDto);
-    return resBook;
+    const updatedExistingWork = resBook.map((item, index) => {
+      const utcDate = new Date(item.booking_date);
+      const timeZone = 'Asia/Bangkok';
+
+      const zonedDate = utcToZonedTime(utcDate, timeZone);
+      const formattedDate = format(zonedDate, 'yyyy-MM-dd HH:mm:ssXXX', { timeZone });
+
+      return { ...item, booking_date: formattedDate };
+    });
+
+    return updatedExistingWork;
   }
 
   async findBookByIDResident(booking_id: number): Promise<Booking | null> {
     const resBook: ReBookDto = await this.bookDao.findBookByIDResident(booking_id);
-    return resBook;
+    const updatedExistingWork = resBook.map((item, index) => {
+      const utcDate = new Date(item.booking_date);
+      const timeZone = 'Asia/Bangkok';
+
+      const zonedDate = utcToZonedTime(utcDate, timeZone);
+      const formattedDate = format(zonedDate, 'yyyy-MM-dd HH:mm:ssXXX', { timeZone });
+
+      return { ...item, booking_date: formattedDate };
+    });
+
+    return updatedExistingWork;
   }
 
   async findBookByIMaid(booking_id: number): Promise<Booking | null> {
     const resBook: ReBookDto = await this.bookDao.findBookByIMaid(booking_id);
-    return resBook;
+    const updatedExistingWork = resBook.map((item, index) => {
+      const utcDate = new Date(item.booking_date);
+      const timeZone = 'Asia/Bangkok';
+
+      const zonedDate = utcToZonedTime(utcDate, timeZone);
+      const formattedDate = format(zonedDate, 'yyyy-MM-dd HH:mm:ssXXX', { timeZone });
+
+      return { ...item, booking_date: formattedDate };
+    });
+
+    return updatedExistingWork;
   }
 
   async findBookinfo(createbookDto: CreateBookDto) {
     const resBook: ReBookDto = await this.bookDao.getBooksinfo(createbookDto);
-    return resBook;
+    const updatedExistingWork = resBook.map((item, index) => {
+      const utcDate = new Date(item.booking_date);
+      const timeZone = 'Asia/Bangkok';
+
+      const zonedDate = utcToZonedTime(utcDate, timeZone);
+      const formattedDate = format(zonedDate, 'yyyy-MM-dd HH:mm:ssXXX', { timeZone });
+
+      return { ...item, booking_date: formattedDate };
+    });
+
+    return updatedExistingWork;
   }
 
   async findBookByResidentNew(createbookDto: CreateBookDto) {
     const resBook: ReBookDto = await this.bookDao.findBookByResidentNew(createbookDto);
-    return resBook;
+    const updatedExistingWork = resBook.map((item, index) => {
+      const utcDate = new Date(item.booking_date);
+      const timeZone = 'Asia/Bangkok';
+
+      const zonedDate = utcToZonedTime(utcDate, timeZone);
+      const formattedDate = format(zonedDate, 'yyyy-MM-dd HH:mm:ssXXX', { timeZone });
+
+      return { ...item, booking_date: formattedDate };
+    });
+
+    return updatedExistingWork;
   }
 
   async findBookByMaid(createbookDto: CreateBookDto) {
     const resBook: ReBookDto = await this.bookDao.findBookByMaid(createbookDto);
-    return resBook;
+    const updatedExistingWork = resBook.map((item, index) => {
+      const utcDate = new Date(item.booking_date);
+      const timeZone = 'Asia/Bangkok';
+
+      const zonedDate = utcToZonedTime(utcDate, timeZone);
+      const formattedDate = format(zonedDate, 'yyyy-MM-dd HH:mm:ssXXX', { timeZone });
+
+      return { ...item, booking_date: formattedDate };
+    });
+
+    return updatedExistingWork;
   }
 
   async findRating(updateReviewDto: UpdateReviewDto) {
@@ -126,7 +188,17 @@ async editBook(createBookDto: CreateBookDto): Promise<Booking> {
 
   async findBookMaidinfo(createbookDto: CreateBookDto) {
     const resBook: ReBookDto = await this.bookDao.getBooksMaidinfo(createbookDto);
-    return resBook;
+    const updatedExistingWork = resBook.map((item, index) => {
+      const utcDate = new Date(item.booking_date);
+      const timeZone = 'Asia/Bangkok';
+
+      const zonedDate = utcToZonedTime(utcDate, timeZone);
+      const formattedDate = format(zonedDate, 'yyyy-MM-dd HH:mm:ssXXX', { timeZone });
+
+      return { ...item, day: formattedDate };
+    });
+
+    return updatedExistingWork;
   }
 
   async createBook(bookDetails: CreateBookDto) {

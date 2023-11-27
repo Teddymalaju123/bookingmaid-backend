@@ -1,5 +1,6 @@
 
 interface ReBookDto {
+  [x: string]: any
   booking_id: number
   booking_date: Date
   work_hour: number
