@@ -41,6 +41,21 @@ export class FeedBackController {
     }
   }
 
+  @Post('/editfeed/:id_feed')
+  async editMaid(@Body() createFeedDto: CreateFeedDto) {
+    try {
+      const updatedMaid = await this.feedbackService.editFeed(createFeedDto);
+      return updatedMaid;
+    } catch (error) {
+      console.log(error);
+
+      throw new HttpException(
+        error,
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
   @Delete('/deletefeed/:id')
   async deleteFeed(@Param('id') feedId: string) {
     try {

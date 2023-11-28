@@ -41,7 +41,7 @@ export class MaidWorkService {
     return resUsers;
   }
 
-  async findWorkByIdwork(id_user: number): Promise<Maidwork | null> {
+  async findWorkByIdwork(id_user: number){
     const resUsers: ResUserDto = await this.maiddao.findMaidWorkByIdWork(id_user);
     return resUsers;
   }

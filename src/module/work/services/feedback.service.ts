@@ -38,6 +38,7 @@ export class FeedbackService {
   }
 
   async createFeed(feedDetails: CreateFeedDto) {
+    console.log(feedDetails.picture_report);
     try {
       const newFeed = this.feedBackRepository.create({
         ...feedDetails,
@@ -45,6 +46,24 @@ export class FeedbackService {
       return await this.feedBackRepository.save(newFeed);
     } catch (error) {
       throw new Error(error);
+    }
+  }
+
+  async editFeed(feedDetails: CreateFeedDto) {
+    try {
+      const existingFeed = await this.feedBackRepository.findOneById(feedDetails.feedback_id);
+      console.log(existingFeed);
+
+      if (!existingFeed) {
+        throw new Error('ไม่พบตารางการทำงาน');
+      }
+      
+      existingFeed.feedback_description = feedDetails.feedback_description;
+
+      const updatedMaid = await this.feedBackRepository.save(existingFeed);
+      return updatedMaid;
+    } catch (error) {
+      throw new Error(error.message);
     }
   }
 

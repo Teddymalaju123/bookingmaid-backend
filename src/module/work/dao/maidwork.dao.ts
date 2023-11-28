@@ -105,7 +105,7 @@ export class MaidworkDao {
             INNER JOIN user on maidwork.id_user = user.id_user 
             INNER JOIN worktime_type on worktime_type.id_worktimetype = maidwork.id_timeworktype
             INNER JOIN status_type on status_type.id_status = maidwork.statuswork
-            WHERE maidwork.id_worktime = ?;;
+            WHERE maidwork.id_worktime = ?;
             `;
 
             const results = await this.maidworkRepository.query(query, [id_worktime]);
